@@ -67,6 +67,22 @@
       background-color: rgba(0,0,0);
     }
   </style>
+
+  <script>
+    function getIP() {
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+          var ipAddress = data.ip;
+          document.getElementById("ipAddress").textContent = ipAddress;
+        })
+        .catch(error => {
+          console.log('An error occurred:', error);
+          document.getElementById("ipAddress").textContent = 'Unable to obtain IP address';
+        });
+    }
+  </script>
+    
 </head>
 <body>
   <h1>ZeAy's HomePage</h1>
@@ -86,5 +102,8 @@
     Explore more on ZeAy’s <a href="./gd.html" target="_top" class="main">homepage.</a><br>
     Telegram:<a href="https://t.me/x8869" target="_top" class="main">@x8869</a>
   </p>
+  <body onload="getIP()">
+  <p id="ipAddress">Obtaining IP address...</p>
+</body>
 </body>
 </html>
