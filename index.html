@@ -149,3 +149,73 @@
     </div>
 </body>
 </html>
+
+<style>
+    .center {
+        width: 540px;
+        height: 120px;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+<script src="./jquery.min.js"></script>
+<script type="text/javascript">
+    let a_idx = 0;
+
+    let ac = new AudioContext();
+
+    $(function (){
+        $("body").click(function(e) {
+            const a = new Array("Ciallo～(∠・ω< )⌒★", "Ciallo～(∠・ω< )⌒☆");
+            const $i = $("<span/>").text(a[a_idx]);
+            a_idx = (a_idx + 1) % a.length;
+            const x = e.pageX,
+                y = e.pageY;
+            $i.css({
+                "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+                "top": y - 20,
+                "left": x,
+                "position": "absolute",
+                "font-weight": "bold",
+                "color": color16()
+            });
+            $("body").append($i);
+            $i.animate({
+                    "top": y - 180,
+                    "opacity": 0
+                },
+                1500,
+                function() {
+                    $i.remove();
+                });
+        });
+    })
+
+    function color16(){
+        const r = Math.floor(Math.random()*256);
+        const g = Math.floor(Math.random()*256);
+        const b = Math.floor(Math.random()*256);
+        return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
+    }
+
+    function load_sound(url_data) {
+        const req = new XMLHttpRequest();
+        req.open('GET', url_data, true);
+        req.responseType = 'arraybuffer';
+        req.onload = function() {
+            ac.decodeAudioData(req.response, function(buffer){
+                const source = ac.createBufferSource();
+                source.buffer = buffer;
+                source.connect(ac.destination);
+                source.start(0);
+            },function (e) {
+                console.info('错误');
+            });
+        }
+        req.send();
+    }
+</script>
