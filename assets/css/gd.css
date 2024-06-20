@@ -1,0 +1,13 @@
+.scroll-text {
+    width: 300px; /* 设置滚动文字区域的宽度 */
+    height: 30px; /* 设置滚动文字区域的高度 */
+    overflow: hidden; /* 隐藏超出区域的文字 */
+    line-height: 30px; /* 设置行高,使文字垂直居中 */
+    white-space: nowrap; /* 防止文字换行 */
+    animation: scrolling 10s linear infinite; /* 添加滚动动画 */
+  }
+  
+  @keyframes scrolling {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
