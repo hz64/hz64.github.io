@@ -27,7 +27,7 @@
     <!-- 分享网页时显示的标题-QQ-->
     <meta itemprop="name" content="ZeAy" />
     <!-- 分享网页时显示的缩略图-QQ-->
-    <meta itemprop="image" content="./assets/img/logo.png" />
+    <meta itemprop="image" content="./logo.png" />
     <!--分享网页时时显示的内容-QQ-->
     <meta name="description" itemprop="description" content="做一个安静的程序员" />
     <!--设置自动适应电脑和手机屏幕-->
@@ -43,142 +43,30 @@
     -->
     <meta name="robots" content="index,follow">
     <!--引入文件-->
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="./assets/css/dm.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/gg.css" />
-    <style>
-    #jz{ margin:0 auto; width:320px; height:100px; border:1px solid #f000}
-    </style>
-    
-    <script src="./assets/js/jquery-2.1.4.min.js"></script>
 </head>
 <body>
     <!--网页主体框架-->
-    <div class="centent">
-
-        <div class="mian">
-            <!-- 上部分 -->
-            <div class="main-top">
-                <div class="main-top-title">
+                    <!-- 头像 -->
+                    <a href=""><img src="./logo.png" width="50" alt="Logo"></a>
                     <!-- 大标题 -->
                     <h1>ZeAy</h1>
-                    <!-- 头像 -->
-                    <a href=""><img src="./assets/img/logo.png" alt="Logo"></a>
-                </div>
                 <!-- 简介 -->
-                <div class="main-top-Brief">
                     <p>海内存知己，天涯若比邻</p>
-                </div>
-            </div>
-            <br>
+            <hr>
             <!-- 下部分 -->
-            <div class="main-bot">
-
-                <!-- 下部分副标题 -->
-                <div class="main-bot-title">
                    <h3>我的站点</h3>
-                </div>
-                
-                <!-- 下部分内容区 -->
-                <div class="main-bot-nr">
-                    <a href="https://blog.hz6.us.kg/" class="main-bot-nr-kp">
-                        <div class="main-bot-nr-kp-k">
-                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/blog.png" alt="Blog" class="kkk"></div>
-                           <div class="main-bot-nr-kp-k-n">
-                               <span class="p1">博客</span>
-                               <span class="p2">分享技术与知识</span>
-                           </div>
-                        </div>
-                    </a>
-                    <a href="./zy/" class="main-bot-nr-kp">
-                        <div class="main-bot-nr-kp-k">
-                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/zy.png" alt="zy" class="kkk"></div>
-                           <div class="main-bot-nr-kp-k-n">
-                               <span class="p1">资源站</span>
-                               <span class="p2">资源&软件分享</span>
-                           </div>
-                        </div>
-                    </a>
-                    <a href="./gd.html" class="main-bot-nr-kp">
-                        <div class="main-bot-nr-kp-k">
-                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/gd.png" alt="gd" class="kkk"></div>
-                           <div class="main-bot-nr-kp-k-n">
-                               <span class="p1">更多</span>
-                               <span class="p2">其它没用的站点</span>
-                           </div>
-                        </div>
-                    </a>
-                    <a href="./a/zs/" class="main-bot-nr-kp">
-                        <div class="main-bot-nr-kp-k">
-                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/zs.png" alt="zs" class="kkk"></div>
-                           <div class="main-bot-nr-kp-k-n">
-                               <span class="p1">支持我</span>
-                               <span class="p2">非常感谢您的支持</span>
-                           </div>
-                        </div>
-                    </a>
-                    
-                </div>
-                <!-- 下部分内容区 end-->
-                
-            </div>
-        </div>
-
+                   <a href="https://blog.hz6.us.kg/">博客</a>
+                   <br>
+                   <a href="./zy/">资源站</a>
+                   <br>
+                   <a href="./a/zc/">支持我</a>
+                   <br>
+                   <a href="./gd.html">更多</a>
+                   <hr>
         <!-- 版权声明 -->
-        <div class="footer">
-            Copyright © 2024 - <a href="https://hz64.github.io/" class="footer-link">ZeAy</a> All Rights Reserved.
+            Copyright © 2024 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
             <br>
-            <a href="mailto:hz64@outlook.sg" class="footer-link">hz64@outlook.sg</a> | <a href="https://t.me/x8869" class="footer-link">@x8869</a>
+            <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
             <br>
-            <a href="./page.html" class="footer-link">查看喵喵的状态ฅ^•ﻌ•^ฅ</a>
-    </div>
-
-    <!--引入js文件-->
-    <!--script type="text/javascript" src="main.js"></script-->
-
-    <!-- 公告弹窗 
-     <div class="overlay" id="overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>重要公告</h2>
-            测试
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("overlay").style.display = "flex";
-            setTimeout(function() {
-                document.getElementById("overlay").style.opacity = 1;
-                document.querySelector(".modal").style.opacity = 1;
-                document.querySelector(".close").style.opacity = 1;
-            }, 100);
-        });
-
-        function closeModal() {
-            document.getElementById("overlay").style.opacity = 0;
-            document.querySelector(".modal").style.opacity = 0;
-            document.querySelector(".close").style.opacity = 0;
-            setTimeout(function() {
-                document.getElementById("overlay").style.display = "none";
-            }, 300);
-        }
-    </script> -->
-
-    <!-- 加载动画 -->
-    <div class="loader-wrapper">
-      <span class="loader"><span class="loader-inner"></span></span>
-    </div>
-
-    <script>
-        $(window).on("load",function(){
-          $(".loader-wrapper").fadeOut("slow");
-        });
-    </script>
-
-        <!-- Histats.com  START (hidden counter) -->
-<a href="/" alt="free page hit counter" target="_blank" >
-<img  src="//sstatic1.histats.com/0.gif?4892687&101" alt="free page hit counter" border="0">
-<!-- Histats.com  END  -->
-
 </body>
 </html>
