@@ -212,4 +212,12 @@
 
     document.getElementById('clearButton').addEventListener('click', function() {
       document.getElementById('encryptedInput').value = ''; 
-      document.getElement
+      document.getElementById('imageContainer').innerHTML = ''; 
+      document.getElementById('keyDisplay').textContent = ''; 
+      document.getElementById('urlInput').value = ''; 
+      document.getElementById('customKey').value = ''; // 清空自定义密码
+      document.getElementById('compressCheckbox').checked = true; // 默认启用压缩
+    });
+  </script>
+</body>
+</html>
