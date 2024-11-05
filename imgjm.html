@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZeAy图片加密算法</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .section {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+    input[type="file"], input[type="text"], textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #000000;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #000000;
+    }
+    #encryptedOutput, #keyDisplay {
+      cursor: pointer;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+      display: inline-block;
+      background-color: #e7f3fe;
+    }
+    #imageContainer img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ZeAy图片加密算法</h1>
+  <div class="container">
+    <div class="section">
+      <h2>图片加密</h2>
+      <input type="file" id="encryptImageInput" accept="image/*">
+      <button id="encryptButton">加密图片</button>
+      <div id="keyDisplay"></div>
+      <div id="encryptedOutput">点击此处复制加密后的数据</div>
+    </div>
+
+    <div class="section">
+      <h2>图片解密</h2>
+      <textarea id="encryptedInput" placeholder="在此粘贴加密后的数据"></textarea>
+      <input type="text" id="decryptKey" placeholder="在此输入密钥">
+      <input type="text" id="urlInput" placeholder="输入URL获取加密数据">
+      <button id="loadFromUrlButton">从URL加载加密数据</button>
+      <button id="decryptButton">解密并显示图片</button>
+      <button id="clearButton">清空文字</button>
+      <div id="imageContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    function generateRandomKey(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result;
+    }
+
+    function encrypt(text, key) {
+      return btoa(text.split('').map((char, index) => {
+        return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
+      }).join(''));
+    }
+
+    function decrypt(text, key) {
+      return atob(text).split('').map((char, index) => {
+        return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
+      }).join('');
+    }
+
+    document.getElementById('encryptButton').addEventListener('click', function() {
+      const fileInput = document.getElementById('encryptImageInput');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        console.error('未选择图片文件');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result.split(',')[1]; 
+        const key = generateRandomKey(16); 
+        const encrypted = encrypt(base64, key);
+        
+        const keyDisplay = document.getElementById('keyDisplay');
+        keyDisplay.textContent = `解密密码： ${key}`;
+        
+        keyDisplay.onclick = function() {
+          navigator.clipboard.writeText(key).then(() => {
+            alert('密钥已复制到剪贴板');
+          }).catch(err => {
+            console.error('复制失败:', err);
+          });
+        };
+
+        const outputDiv = document.getElementById('encryptedOutput');
+        outputDiv.textContent = encrypted;
+        outputDiv.setAttribute('data-encrypted', encrypted); 
+      };
+
+      reader.onerror = function(e) {
+        console.error('文件读取错误:', e);
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById('encryptedOutput').addEventListener('click', function() {
+      const encryptedData = this.getAttribute('data-encrypted');
+      if (encryptedData) {
+        navigator.clipboard.writeText(encryptedData).then(() => {
+          alert('加密数据已复制到剪贴板');
+        }).catch(err => {
+          console.error('复制失败:', err);
+        });
+      }
+    });
+
+    document.getElementById('loadFromUrlButton').addEventListener('click', function() {
+      const urlInput = document.getElementById('urlInput').value.trim();
+      const urlParams = new URLSearchParams(urlInput.split('?')[1]);
+      const encryptedData = urlParams.get('data'); 
+
+      if (encryptedData) {
+        document.getElementById('encryptedInput').value = encryptedData;
+      } else {
+        alert('未在URL中找到加密数据');
+      }
+    });
+
+    document.getElementById('decryptButton').addEventListener('click', function() {
+      const encryptedData = document.getElementById('encryptedInput').value.trim();
+      const key = document.getElementById('decryptKey').value.trim();
+
+      if (!encryptedData) {
+        console.error('未输入加密数据');
+        return;
+      }
+
+      try {
+        const decryptedBase64 = decrypt(encryptedData, key);
+        const img = new Image();
+        img.src = `data:image/png;base64,${decryptedBase64}`;
+        const imageContainer = document.getElementById('imageContainer');
+        imageContainer.innerHTML = ''; 
+        imageContainer.appendChild(img);
+      } catch (e) {
+        console.error('解密失败:', e);
+        alert('解密失败，请检查加密数据和密钥是否正确');
+      }
+    });
+
+    document.getElementById('clearButton').addEventListener('click', function() {
+      document.getElementById('encryptedInput').value = ''; 
+      document.getElementById('imageContainer').innerHTML = ''; 
+      document.getElementById('keyDisplay').textContent = ''; 
+      document.getElementById('urlInput').value = ''; 
+    });
+  </script>
+</body>
+</html>
