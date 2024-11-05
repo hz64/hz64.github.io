@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZeAy图片加密算法</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,7 +30,7 @@
       border-radius: 8px;
       background-color: #fafafa;
     }
-    input[type="file"], input[type="text"], textarea, button {
+    input[type="file"], input[type="text"], button {
       width: 100%;
       padding: 10px;
       margin: 5px 0;
@@ -43,20 +44,59 @@
       transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #000000;
+      background-color: #333;
     }
-    #encryptedOutput, #keyDisplay {
-      cursor: pointer;
-      border: 1px solid #ccc;
+    .encrypted-file {
       padding: 10px;
-      margin-top: 10px;
-      display: inline-block;
+      margin: 5px 0;
+      border: 1px solid #007bff;
+      border-radius: 4px;
       background-color: #e7f3fe;
+      display: flex;
+      flex-direction: column;
+    }
+    .encrypted-file span {
+      margin-bottom: 5px;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .download-button {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.3s;
+      width: fit-content;
+      align-self: flex-start;
+    }
+    .download-button:hover {
+      background-color: #0056b3;
     }
     #imageContainer img {
       max-width: 100%;
       margin-top: 10px;
       border-radius: 4px;
+    }
+    .password-info {
+      font-size: 16px;
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-bottom: 10px;
+      display: none; /* 默认隐藏，待加密时显示 */
+    }
+    #passwordContainer {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #e7f3fe;
     }
   </style>
 </head>
@@ -65,19 +105,21 @@
   <div class="container">
     <div class="section">
       <h2>图片加密</h2>
-      <input type="file" id="encryptImageInput" accept="image/*">
-      <input type="text" id="customKey" placeholder="在此输入自定义解密密码（可选）">
+      <label>
+        <input type="checkbox" id="enableCustomPasswordCheckbox">
+        启用自定义解密密码
+      </label>
+      <input type="text" id="customKey" placeholder="在此输入统一自定义解密密码（可选）" disabled>
+      <input type="file" id="encryptImageInput" accept="image/*" multiple>
       <button id="encryptButton">加密图片</button>
-      <div id="keyDisplay"></div>
-      <div id="encryptedOutput">点击此处复制加密后的数据</div>
+      <div id="passwordContainer" class="password-info"></div> <!-- 显示密码的容器 -->
+      <div id="downloadContainer"></div>
     </div>
 
     <div class="section">
       <h2>图片解密</h2>
-      <textarea id="encryptedInput" placeholder="在此粘贴加密后的数据"></textarea>
-      <input type="text" id="decryptKey" placeholder="在此输入密钥">
-      <input type="text" id="urlInput" placeholder="输入URL获取加密数据">
-      <button id="loadFromUrlButton">从URL加载加密数据</button>
+      <input type="file" id="decryptImageInput" accept=".zimg" multiple>
+      <input type="text" id="decryptKey" placeholder="在此输入解密密码">
       <button id="decryptButton">解密并显示图片</button>
       <button id="clearButton">清空文字</button>
       <div id="imageContainer"></div>
@@ -100,101 +142,121 @@
       }).join(''));
     }
 
-    function decrypt(text, key) {
-      return atob(text).split('').map((char, index) => {
-        return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
-      }).join('');
-    }
+    document.getElementById('enableCustomPasswordCheckbox').addEventListener('change', function() {
+      const customKeyInput = document.getElementById('customKey');
+      customKeyInput.disabled = !this.checked; // 根据复选框状态启用或禁用输入框
+      if (!this.checked) {
+        customKeyInput.value = ''; // 如果禁用自定义密码，清空输入框
+      }
+    });
 
     document.getElementById('encryptButton').addEventListener('click', function() {
       const fileInput = document.getElementById('encryptImageInput');
-      const file = fileInput.files[0];
-      const customKey = document.getElementById('customKey').value.trim() || generateRandomKey(16);
+      const customKey = document.getElementById('customKey').value.trim();
+      const enableCustomPassword = document.getElementById('enableCustomPasswordCheckbox').checked;
+      const key = enableCustomPassword && customKey ? customKey : generateRandomKey(16); // 使用自定义密码或随机密码
 
-      if (!file) {
+      const files = fileInput.files;
+      if (files.length === 0) {
         console.error('未选择图片文件');
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64 = e.target.result.split(',')[1]; 
-        const encrypted = encrypt(base64, customKey);
-        
-        const keyDisplay = document.getElementById('keyDisplay');
-        keyDisplay.textContent = `解密密码： ${customKey}`;
-        
-        keyDisplay.onclick = function() {
-          navigator.clipboard.writeText(customKey).then(() => {
-            alert('密钥已复制到剪贴板');
-          }).catch(err => {
-            console.error('复制失败:', err);
-          });
+      const downloadContainer = document.getElementById('downloadContainer');
+      downloadContainer.innerHTML = ''; // 清空下载容器
+      const passwordContainer = document.getElementById('passwordContainer');
+      passwordContainer.innerHTML = ''; // 清空密码显示容器
+      passwordContainer.style.display = 'block'; // 显示密码信息
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result.split(',')[1];
+          const encrypted = encrypt(base64, key);
+          
+          const outputDiv = document.createElement('div');
+          outputDiv.classList.add('encrypted-file');
+
+          const fileInfo = document.createElement('span');
+          fileInfo.textContent = `文件: ${file.name.replace(/\.[^/.]+$/, "")}.zimg`; // 显示.zimg后缀
+
+          const downloadButton = document.createElement('button');
+          downloadButton.className = 'download-button';
+          downloadButton.textContent = '下载';
+          downloadButton.onclick = function() {
+            const blob = new Blob([encrypted], { type: 'application/octet-stream' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${file.name.replace(/\.[^/.]+$/, "")}.zimg`; // 使用原文件名去除后缀再加上.zimg
+            link.click();
+          };
+
+          outputDiv.appendChild(fileInfo);
+          outputDiv.appendChild(downloadButton);
+          downloadContainer.appendChild(outputDiv);
         };
 
-        const outputDiv = document.getElementById('encryptedOutput');
-        outputDiv.textContent = encrypted;
-        outputDiv.setAttribute('data-encrypted', encrypted); 
-      };
+        reader.onerror = function(e) {
+          console.error('文件读取错误:', e);
+        };
 
-      reader.onerror = function(e) {
-        console.error('文件读取错误:', e);
-      };
+        reader.readAsDataURL(file);
+      });
 
-      reader.readAsDataURL(file);
-    });
-
-    document.getElementById('encryptedOutput').addEventListener('click', function() {
-      const encryptedData = this.getAttribute('data-encrypted');
-      if (encryptedData) {
-        navigator.clipboard.writeText(encryptedData).then(() => {
-          alert('加密数据已复制到剪贴板');
+      // 显示统一密码
+      const passwordInfo = document.createElement('div');
+      passwordInfo.textContent = `统一密码: ${key} (点击复制)`;
+      passwordInfo.onclick = function() {
+        navigator.clipboard.writeText(key).then(() => {
+          alert('密码已复制到剪贴板');
         }).catch(err => {
           console.error('复制失败:', err);
         });
-      }
-    });
-
-    document.getElementById('loadFromUrlButton').addEventListener('click', function() {
-      const urlInput = document.getElementById('urlInput').value.trim();
-      const urlParams = new URLSearchParams(urlInput.split('?')[1]);
-      const encryptedData = urlParams.get('data'); 
-
-      if (encryptedData) {
-        document.getElementById('encryptedInput').value = encryptedData;
-      } else {
-        alert('未在URL中找到加密数据');
-      }
+      };
+      passwordContainer.appendChild(passwordInfo);
     });
 
     document.getElementById('decryptButton').addEventListener('click', function() {
-      const encryptedData = document.getElementById('encryptedInput').value.trim();
+      const fileInput = document.getElementById('decryptImageInput');
       const key = document.getElementById('decryptKey').value.trim();
+      const files = fileInput.files;
 
-      if (!encryptedData) {
-        console.error('未输入加密数据');
+      if (files.length === 0) {
+        console.error('未选择加密文件');
         return;
       }
 
-      try {
-        const decryptedBase64 = decrypt(encryptedData, key);
-        const img = new Image();
-        img.src = `data:image/png;base64,${decryptedBase64}`;
-        const imageContainer = document.getElementById('imageContainer');
-        imageContainer.innerHTML = ''; 
-        imageContainer.appendChild(img);
-      } catch (e) {
-        console.error('解密失败:', e);
-        alert('解密失败，请检查加密数据和密钥是否正确');
-      }
+      const imageContainer = document.getElementById('imageContainer');
+      imageContainer.innerHTML = ''; // 清空之前的图片
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const encryptedData = e.target.result;
+          const decryptedBase64 = atob(encryptedData).split('').map((char, index) => {
+            return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
+          }).join('');
+          const img = new Image();
+          img.src = `data:image/png;base64,${decryptedBase64}`;
+          imageContainer.appendChild(img);
+        };
+
+        reader.onerror = function(e) {
+          console.error('文件读取错误:', e);
+        };
+
+        reader.readAsText(file);
+      });
     });
 
     document.getElementById('clearButton').addEventListener('click', function() {
-      document.getElementById('encryptedInput').value = ''; 
-      document.getElementById('imageContainer').innerHTML = ''; 
-      document.getElementById('keyDisplay').textContent = ''; 
-      document.getElementById('urlInput').value = ''; 
-      document.getElementById('customKey').value = ''; // 清空自定义密码
+      document.getElementById('decryptImageInput').value = '';
+      document.getElementById('decryptKey').value = '';
+      document.getElementById('imageContainer').innerHTML = '';
+      document.getElementById('downloadContainer').innerHTML = '';
+      document.getElementById('passwordContainer').innerHTML = '';
+      document.getElementById('customKey').value = '';
+      document.getElementById('enableCustomPasswordCheckbox').checked = false; // 默认禁用自定义密码
     });
   </script>
 </body>
