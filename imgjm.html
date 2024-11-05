@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZeAy图片加密算法</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -66,6 +67,11 @@
     <div class="section">
       <h2>图片加密</h2>
       <input type="file" id="encryptImageInput" accept="image/*">
+      <input type="text" id="customKey" placeholder="在此输入自定义解密密码（可选）">
+      <label>
+        <input type="checkbox" id="compressCheckbox" checked>
+        启用压缩加密数据
+      </label>
       <button id="encryptButton">加密图片</button>
       <div id="keyDisplay"></div>
       <div id="encryptedOutput">点击此处复制加密后的数据</div>
@@ -93,21 +99,37 @@
       return result;
     }
 
-    function encrypt(text, key) {
-      return btoa(text.split('').map((char, index) => {
+    function compress(data) {
+      const strData = atob(data); // 将 base64 解码为二进制字符串
+      const compressedData = pako.deflate(strData, { to: 'string' });
+      return btoa(compressedData); // 将压缩后的数据转换为 base64
+    }
+
+    function decompress(data) {
+      const compressedData = atob(data); // 解码 base64
+      const decompressedData = pako.inflate(compressedData, { to: 'string' });
+      return decompressedData; // 返回二进制字符串
+    }
+
+    function encrypt(text, key, shouldCompress) {
+      const processedText = shouldCompress ? compress(text) : text;
+      return btoa(processedText.split('').map((char, index) => {
         return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
       }).join(''));
     }
 
-    function decrypt(text, key) {
-      return atob(text).split('').map((char, index) => {
+    function decrypt(text, key, shouldDecompress) {
+      const decryptedText = atob(text).split('').map((char, index) => {
         return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(index % key.length));
       }).join('');
+      return shouldDecompress ? decompress(decryptedText) : decryptedText; // 根据参数决定是否解压缩
     }
 
     document.getElementById('encryptButton').addEventListener('click', function() {
       const fileInput = document.getElementById('encryptImageInput');
       const file = fileInput.files[0];
+      const customKey = document.getElementById('customKey').value.trim() || generateRandomKey(16);
+      const shouldCompress = document.getElementById('compressCheckbox').checked;
 
       if (!file) {
         console.error('未选择图片文件');
@@ -117,14 +139,13 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         const base64 = e.target.result.split(',')[1]; 
-        const key = generateRandomKey(16); 
-        const encrypted = encrypt(base64, key);
+        const encrypted = encrypt(base64, customKey, shouldCompress);
         
         const keyDisplay = document.getElementById('keyDisplay');
-        keyDisplay.textContent = `解密密码： ${key}`;
+        keyDisplay.textContent = `解密密码： ${customKey}`;
         
         keyDisplay.onclick = function() {
-          navigator.clipboard.writeText(key).then(() => {
+          navigator.clipboard.writeText(customKey).then(() => {
             alert('密钥已复制到剪贴板');
           }).catch(err => {
             console.error('复制失败:', err);
@@ -169,6 +190,7 @@
     document.getElementById('decryptButton').addEventListener('click', function() {
       const encryptedData = document.getElementById('encryptedInput').value.trim();
       const key = document.getElementById('decryptKey').value.trim();
+      const shouldDecompress = document.getElementById('compressCheckbox').checked; // 根据复选框决定是否解压缩
 
       if (!encryptedData) {
         console.error('未输入加密数据');
@@ -176,7 +198,7 @@
       }
 
       try {
-        const decryptedBase64 = decrypt(encryptedData, key);
+        const decryptedBase64 = decrypt(encryptedData, key, shouldDecompress);
         const img = new Image();
         img.src = `data:image/png;base64,${decryptedBase64}`;
         const imageContainer = document.getElementById('imageContainer');
@@ -190,10 +212,4 @@
 
     document.getElementById('clearButton').addEventListener('click', function() {
       document.getElementById('encryptedInput').value = ''; 
-      document.getElementById('imageContainer').innerHTML = ''; 
-      document.getElementById('keyDisplay').textContent = ''; 
-      document.getElementById('urlInput').value = ''; 
-    });
-  </script>
-</body>
-</html>
+      document.getElement
