@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>获取当前浏览器的饼干 - ZeAy</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            cursor: pointer;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>获取当前浏览器的饼干</h1>
+    <button onclick="getCookies()">获取 Cookies</button>
+    
+    <table id="cookieTable">
+        <thead>
+            <tr>
+                <th>Cookie 名称</th>
+                <th>Cookie 值</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        function getCookies() {
+            var cookies = document.cookie;
+            var tableBody = document.querySelector('#cookieTable tbody');
+            tableBody.innerHTML = '';  
+
+            if (cookies) {
+                var cookieArray = cookies.split(';');
+                
+                cookieArray.forEach(function(cookie) {
+                    var cookieParts = cookie.split('=');
+                    var cookieName = cookieParts[0].trim();
+                    var cookieValue = cookieParts[1] ? cookieParts[1].trim() : ''; 
+
+                    var row = document.createElement('tr');
+                    
+                    var nameCell = document.createElement('td');
+                    var valueCell = document.createElement('td');
+                    
+                    nameCell.textContent = cookieName;
+                    valueCell.textContent = cookieValue;
+
+                    valueCell.addEventListener('click', function() {
+                        copyCookie(cookieValue); 
+                    });
+
+                    row.appendChild(nameCell);
+                    row.appendChild(valueCell);
+
+                    tableBody.appendChild(row);
+                });
+            } else {
+                var row = document.createElement('tr');
+                var cell = document.createElement('td');
+                cell.colSpan = 2;
+                cell.textContent = '当前没有 Cookies';
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            }
+        }
+
+        function copyCookie(cookieValue) {
+            // Copy the cookie value to clipboard
+            navigator.clipboard.writeText(cookieValue).then(function() {
+                alert('已复制 Cookie 值: ' + cookieValue);
+            }).catch(function(err) {
+                alert('复制失败: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
