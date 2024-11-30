@@ -4,32 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>ZeAy</title>
-    <!-- 为搜索引擎定义关键词 -->
     <meta name="keywords" content="ZeAy">
-    <!-- 为网页定义描述内容 -->
     <meta name="description" content="ZeAy个人主页">
-    <!-- 定义网页作者 -->
     <meta name="author" content="ZeAy">
-    <!-- 网站版权 -->
     <meta name="copyright" content="ZeAy">
-    <!-- 指定IE和Chrome使用最新版本渲染当前页面 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!-- 指导浏览器如何缓存响应 -->
     <meta http-equiv="cache-control" content="no-cache">
-    <!-- 分享网页时显示的标题-QQ -->
     <meta itemprop="name" content="ZeAy" />
-    <!-- 分享网页时显示的缩略图-QQ -->
     <meta itemprop="image" content="./logo.png" />
-    <!-- 分享网页时显示的内容-QQ -->
     <meta name="description" itemprop="description" content="做一个安静的程序员" />
-    <!-- 设置自动适应电脑和手机屏幕 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no minimal-ui">
-    <!-- 设置浏览器栏favicon图标 -->
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-    <!-- 定义搜索引擎爬虫的索引方式 -->
     <meta name="robots" content="index,follow">
 
-    <!-- 添加动画和链接优化的样式 -->
     <style>
         /* 页面淡入动画 */
         body {
@@ -68,6 +55,8 @@
             transform: scale(1.05);
             background-color: #ffb7c5;
         }
+
+        /* 旋转动画 */
         .rotate {
             animation: rotate 5s linear infinite;
         }
@@ -79,6 +68,16 @@
             50% {
                 transform: rotate(360deg);
             }
+        }
+
+        /* 吉祥物样式 */
+        .mascot {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -107,6 +106,8 @@
     <br>
     <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
     <br>
+
+    <img src="mascot.png" alt="真寻" class="mascot">
 </body>
 
 </html>
