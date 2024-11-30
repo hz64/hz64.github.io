@@ -4,69 +4,109 @@
 <head>
     <meta charset="UTF-8">
     <title>ZeAy</title>
-    <!--为搜索引擎定义关键词-->
+    <!-- 为搜索引擎定义关键词 -->
     <meta name="keywords" content="ZeAy">
-    <!--为网页定义描述内容 用于告诉搜索引擎，你网站的主要内容-->
+    <!-- 为网页定义描述内容 -->
     <meta name="description" content="ZeAy个人主页">
-    <!--定义网页作者-->
+    <!-- 定义网页作者 -->
     <meta name="author" content="ZeAy">
-    <!--网站版权-->
+    <!-- 网站版权 -->
     <meta name="copyright" content="ZeAy">
-    <!--指定IE和Chrome使用最新版本渲染当前页面-->
+    <!-- 指定IE和Chrome使用最新版本渲染当前页面 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <!--指导浏览器如何缓存某个响应以及缓存多长时间-->
-    <!--no-cache:先发送请求,与服务器确认该资源是否被更改,如果未被更改,则使用缓存
-    no-store:不允许缓存,每次都要去服务器上,下载完整的响应(安全措施)
-    public:缓存所有响应,但并非必须,因为max-age也可以做到相同效果
-    private:只为单个用户缓存,因此不允许任何中继进行缓存,(比如说CDN就不允许缓存private的响应)
-    maxage:当前请求开始,该响应在多久内能被缓存和重用,而不去服务器重新请求,例:max-age=60表示响应可以再缓存和重用60秒
-    -->
+    <!-- 指导浏览器如何缓存响应 -->
     <meta http-equiv="cache-control" content="no-cache">
-    <!--禁止百度自动转码 用于禁止当前页面在移动端浏览时,被百度自动转码,虽然百度的本意是好的,但是转码效果很多时候却不尽人意-->
-    <!--meta http-equiv="Cache-Control" content="no-siteapp" /-->
-    <!-- 分享网页时显示的标题-QQ-->
+    <!-- 分享网页时显示的标题-QQ -->
     <meta itemprop="name" content="ZeAy" />
-    <!-- 分享网页时显示的缩略图-QQ-->
+    <!-- 分享网页时显示的缩略图-QQ -->
     <meta itemprop="image" content="./logo.png" />
-    <!--分享网页时时显示的内容-QQ-->
+    <!-- 分享网页时显示的内容-QQ -->
     <meta name="description" itemprop="description" content="做一个安静的程序员" />
-    <!--设置自动适应电脑和手机屏幕-->
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no minimal-ui">
-    <!--设置浏览器栏favicon图标-->
+    <!-- 设置自动适应电脑和手机屏幕 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no minimal-ui">
+    <!-- 设置浏览器栏favicon图标 -->
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-    <!--定义搜索引擎爬虫的索引方式-->
-    <!--index,follow:可以抓取本页，而且可以顺着本页继续索引别的链接
-    noindex,follow:不许抓取本页，但是可以顺着本页抓取索引别的链接
-    index,nofollow:可以抓取本页，但是不许顺着本页抓取索引别的链接
-    noindex,nofollow:不许抓取本页，也不许顺着本页抓取索引别的链接
-    -->
+    <!-- 定义搜索引擎爬虫的索引方式 -->
     <meta name="robots" content="index,follow">
-    <!--引入文件-->
+
+    <!-- 添加动画和链接优化的样式 -->
+    <style>
+        /* 页面淡入动画 */
+        body {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 链接优化 */
+        a {
+            text-decoration: none;
+            color: #ffb7c5;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        a:hover {
+            color: #ff728e;
+            border-bottom: 2px solid #ffb7c5;
+        }
+
+        /* 按钮优化（可选） */
+        button {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #ffb7c5;
+        }
+        .rotate {
+            animation: rotate 5s linear infinite;
+        }
+
+        @keyframes rotate {
+            30% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <!--网页主体框架-->
-                    <!-- 头像 -->
-                    <a href=""><img src="./logo.png" width="50" alt="Logo"></a>
-                    <!-- 大标题 -->
-                    <h1>ZeAy</h1>
-                <!-- 简介 -->
-                    <p>海内存知己，天涯若比邻</p>
-            <hr>
-            <!-- 下部分 -->
-                   <h3>我的站点</h3>
-                   <a href="https://blog.hz6.us.kg/">博客</a>
-                   <br>
-                   <a href="./zy/">资源站</a>
-                   <br>
-                   <a href="./a/zc/">支持我</a>
-                   <br>
-                   <a href="./gd.html">更多</a>
-                   <hr>
-        <!-- 版权声明 -->
-            Copyright © 2024 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
-            <br>
-            <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
-            <br>
+    <!-- 网页主体框架 -->
+    <!-- 头像 -->
+    <a href=""><img src="./logo.png" width="50" alt="Logo" class="rotate"></a>
+    <!-- 大标题 -->
+    <h1>ZeAy</h1>
+    <!-- 简介 -->
+    <p>海内存知己，天涯若比邻</p>
+    <hr>
+    <!-- 下部分 -->
+    <h3>我的站点</h3>
+    <a href="https://blog.hz6.us.kg/">博客</a>
+    <br>
+    <a href="./zy/">资源站</a>
+    <br>
+    <a href="./a/zc/">支持我</a>
+    <br>
+    <a href="./gd.html">更多</a>
+    <hr>
+    <!-- 版权声明 -->
+    Copyright © 2024 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
+    <br>
+    <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
+    <br>
 </body>
+
 </html>
