@@ -79,6 +79,26 @@
             height: 50px;
             z-index: 1000;
         }
+
+        /* 雪花样式 */
+        .snowflake {
+            position: fixed;
+            top: -40px;
+            color: #fff;
+            font-size: 1.2em;
+            pointer-events: none;
+            z-index: 9999;
+            user-select: none;
+            text-shadow: 0 0 8px #fff, 0 0 4px #b3e0ff;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0.7;
+            }
+        }
     </style>
 </head>
 
@@ -107,7 +127,29 @@
     <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
     <br>
 
-    <img src="mascot.png" alt="真寻" class="mascot">
+    <img src="/10.png" alt="10" class="mascot">
+
+    <script>
+        // 雪花飘落效果
+        const snowColors = ['#fff', '#e0f7fa', '#b3e0ff', '#f0f8ff'];
+        function createSnowflake() {
+            const snowflake = document.createElement('span');
+            snowflake.className = 'snowflake';
+            snowflake.innerText = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.fontSize = (Math.random() * 10 + 12) + 'px';
+            snowflake.style.opacity = Math.random() * 0.5 + 0.5;
+            snowflake.style.color = snowColors[Math.floor(Math.random() * snowColors.length)];
+            snowflake.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 300);
+    </script>
 </body>
 
 </html>
