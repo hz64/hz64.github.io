@@ -84,12 +84,13 @@
         .snowflake {
             position: fixed;
             top: -40px;
-            color: #fff;
+            color: rgba(255, 255, 255, 0.8);
+            /* 使用rgba增加透明度 */
             font-size: 1.2em;
             pointer-events: none;
             z-index: 9999;
             user-select: none;
-            text-shadow: 0 0 8px #fff, 0 0 4px #b3e0ff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 4px rgba(179, 224, 255, 0.3);
             animation: fall linear infinite;
         }
 
@@ -122,7 +123,7 @@
     <a href="./gd.html">更多</a>
     <hr>
     <!-- 版权声明 -->
-    Copyright © 2024 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
+    Copyright © 2025 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
     <br>
     <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a>
     <br>
@@ -131,7 +132,12 @@
 
     <script>
         // 雪花飘落效果
-        const snowColors = ['#fff', '#e0f7fa', '#b3e0ff', '#f0f8ff'];
+        const snowColors = [
+            'rgba(255,255,255,0.8)',
+            'rgba(224,247,250,0.7)',
+            'rgba(179,224,255,0.7)',
+            'rgba(240,248,255,0.7)'
+        ];
         function createSnowflake() {
             const snowflake = document.createElement('span');
             snowflake.className = 'snowflake';
