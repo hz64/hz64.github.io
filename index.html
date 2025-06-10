@@ -79,27 +79,6 @@
             height: 50px;
             z-index: 1000;
         }
-
-        /* 雪花样式 */
-        .snowflake {
-            position: fixed;
-            top: -40px;
-            color: rgba(255, 255, 255, 0.8);
-            /* 使用rgba增加透明度 */
-            font-size: 1.2em;
-            pointer-events: none;
-            z-index: 9999;
-            user-select: none;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 4px rgba(179, 224, 255, 0.3);
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-                opacity: 0.7;
-            }
-        }
     </style>
 </head>
 
@@ -130,32 +109,5 @@
 
     <img src="/10.png" alt="10" class="mascot">
 
-    <script>
-        // 雪花飘落效果
-        const snowColors = [
-            'rgba(255,255,255,0.8)',
-            'rgba(224,247,250,0.7)',
-            'rgba(179,224,255,0.7)',
-            'rgba(240,248,255,0.7)'
-        ];
-        function createSnowflake() {
-            const snowflake = document.createElement('span');
-            snowflake.className = 'snowflake';
-            snowflake.innerText = '❄';
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.fontSize = (Math.random() * 10 + 12) + 'px';
-            snowflake.style.opacity = Math.random() * 0.5 + 0.5;
-            snowflake.style.color = snowColors[Math.floor(Math.random() * snowColors.length)];
-            snowflake.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(snowflake);
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
-        }
-
-        setInterval(createSnowflake, 300);
-    </script>
 </body>
-
 </html>
