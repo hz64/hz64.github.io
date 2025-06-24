@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>赞赏码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            text-align: center;
+            padding: 40px 10px;
+            min-height: 100vh;
+            animation: fadeInBg 1s;
+        }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .qr-container {
+            display: inline-block;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+            animation: floatIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes floatIn {
+            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .qr-image {
+            width: 300px;
+            height: 300px;
+            max-width: 80vw;
+            max-height: 80vw;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            transition: transform 0.3s;
+            animation: qrPop 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        .qr-image:hover {
+            transform: scale(1.06) rotate(-2deg);
+            box-shadow: 0 8px 32px rgba(60,60,120,0.18);
+        }
+        @keyframes qrPop {
+            0% { transform: scale(0.7) rotate(8deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+        .caption {
+            margin-top: 12px;
+            color: #555;
+            word-break: break-all;
+            opacity: 0.85;
+            animation: fadeInText 1.5s;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 0.85; }
+        }
+        @media (max-width: 400px) {
+            .qr-image {
+                width: 90vw;
+                height: 90vw;
+                max-width: 90vw;
+                max-height: 90vw;
+            }
+            body {
+                padding: 10px 2px;
+            }
+            .qr-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>感谢您的支持</h1>
+    <div class="qr-container">
+        <img src="img/wxzsm.png" alt="二维码" class="qr-image">
+        <div class="caption">小泽</div>
+        <div class="tip" style="margin-top:10px;color:#2d8cf0;font-size:1em;opacity:0.85;animation:fadeInText 2s;">
+            截图或保存赞赏码微信扫一扫
+        </div>
+    </div>
+</body>
+</html>
