@@ -40,12 +40,17 @@
             border-radius: 8px;
             background: #fff;
             box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
             animation: qrPop 1.2s cubic-bezier(.68,-0.55,.27,1.55);
         }
         .qr-image:hover {
             transform: scale(1.06) rotate(-2deg);
             box-shadow: 0 8px 32px rgba(60,60,120,0.18);
+        }
+        /* 新增：按下动画类 */
+        .qr-image.qr-active {
+            transform: scale(1.13) rotate(3deg);
+            box-shadow: 0 12px 40px rgba(60,60,120,0.22);
         }
         @keyframes qrPop {
             0% { transform: scale(0.7) rotate(8deg); opacity: 0; }
@@ -87,5 +92,33 @@
             截图或保存赞赏码微信扫一扫
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var qrImg = document.querySelector('.qr-image');
+        if (!qrImg) return;
+        // 手机端按下
+        qrImg.addEventListener('touchstart', function() {
+            qrImg.classList.add('qr-active');
+        });
+        // 手机端松开
+        qrImg.addEventListener('touchend', function() {
+            qrImg.classList.remove('qr-active');
+        });
+        // 防止滑动时卡住
+        qrImg.addEventListener('touchcancel', function() {
+            qrImg.classList.remove('qr-active');
+        });
+        // 兼容PC端鼠标按下
+        qrImg.addEventListener('mousedown', function() {
+            qrImg.classList.add('qr-active');
+        });
+        qrImg.addEventListener('mouseup', function() {
+            qrImg.classList.remove('qr-active');
+        });
+        qrImg.addEventListener('mouseleave', function() {
+            qrImg.classList.remove('qr-active');
+        });
+    });
+    </script>
 </body>
 </html>
