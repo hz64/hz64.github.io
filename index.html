@@ -51,11 +51,13 @@
             width: 0;
             background: linear-gradient(90deg, #222 0%, #555 100%);
             border-radius: 3px;
-            animation: loader-bar-move 1.2s cubic-bezier(.4, 2, .6, 1) forwards;
+            transition: width 0.3s cubic-bezier(.4, 2, .6, 1);
         }
-        @keyframes loader-bar-move {
-            from { width: 0; }
-            to { width: 100%; }
+        .loader-text {
+            margin-top: 12px;
+            color: #888;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -65,8 +67,9 @@
         <div class="loader-bar-wrap">
             <div class="loader-bar"></div>
         </div>
+        <div class="loader-text" id="loader-text">正在加载资源...</div>
     </div>
-    <div class="centent">
+    <div class="centent" style="visibility:hidden;">
         <div class="mian">
             <div class="main-top">
                 <div class="main-top-title">
@@ -134,34 +137,43 @@
         </div>
     </div>
     <script>
-    window.addEventListener('DOMContentLoaded', function () {
+    (function () {
         var loader = document.getElementById('page-loader');
         var bar = document.querySelector('.loader-bar');
-        var images = Array.from(document.images);
+        var text = document.getElementById('loader-text');
+        var content = document.querySelector('.centent');
+        var images = Array.from(document.images).filter(function(img){
+            return !img.closest('#page-loader');
+        });
         var loadedCount = 0;
         var total = images.length;
         var finished = false;
+        var minShowTime = 800;
+        var startTime = Date.now();
+
         function setBar(percent) {
             bar.style.width = Math.min(percent, 100) + '%';
+            text.textContent = '已加载 ' + Math.min(percent, 100) + '%';
         }
         function finish() {
             if (finished) return;
             finished = true;
             setBar(100);
-            setTimeout(hideLoader, 300);
+            var delay = Math.max(0, minShowTime - (Date.now() - startTime));
+            setTimeout(hideLoader, delay);
         }
         if (total === 0) {
             finish();
-            return;
+        } else {
+            images.forEach(function (img) {
+                if (img.complete) {
+                    check();
+                } else {
+                    img.addEventListener('load', checkOnce, { once: true });
+                    img.addEventListener('error', checkOnce, { once: true });
+                }
+            });
         }
-        images.forEach(function (img) {
-            if (img.complete) {
-                check();
-            } else {
-                img.addEventListener('load', checkOnce, { once: true });
-                img.addEventListener('error', checkOnce, { once: true });
-            }
-        });
         function checkOnce() {
             check();
         }
@@ -177,11 +189,12 @@
             loader.classList.add('hide');
             setTimeout(function () {
                 loader.style.display = 'none';
-            }, 600);
+                content.style.visibility = 'visible';
+            }, 500);
         }
-        setTimeout(finish, 3000);
+        setTimeout(finish, 4000);
         window.addEventListener('load', finish);
-    });
+    })();
     </script>
 </body>
 </html>
