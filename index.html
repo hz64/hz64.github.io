@@ -142,7 +142,7 @@
         var total = images.length;
         var finished = false;
         function setBar(percent) {
-            bar.style.width = percent + '%';
+            bar.style.width = Math.min(percent, 100) + '%';
         }
         function finish() {
             if (finished) return;
