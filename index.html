@@ -139,28 +139,38 @@
         var bar = document.querySelector('.loader-bar');
         var images = Array.from(document.images);
         var loadedCount = 0;
+        var total = images.length;
+        var finished = false;
         function setBar(percent) {
             bar.style.width = percent + '%';
         }
-        if (images.length === 0) {
+        function finish() {
+            if (finished) return;
+            finished = true;
             setBar(100);
-            hideLoader();
+            setTimeout(hideLoader, 300);
+        }
+        if (total === 0) {
+            finish();
             return;
         }
         images.forEach(function (img) {
             if (img.complete) {
                 check();
             } else {
-                img.addEventListener('load', check);
-                img.addEventListener('error', check);
+                img.addEventListener('load', checkOnce, { once: true });
+                img.addEventListener('error', checkOnce, { once: true });
             }
         });
+        function checkOnce() {
+            check();
+        }
         function check() {
             loadedCount++;
-            var percent = Math.round((loadedCount / images.length) * 100);
+            var percent = Math.round((loadedCount / total) * 100);
             setBar(percent);
-            if (loadedCount >= images.length) {
-                setTimeout(hideLoader, 300);
+            if (loadedCount >= total) {
+                finish();
             }
         }
         function hideLoader() {
@@ -169,6 +179,8 @@
                 loader.style.display = 'none';
             }, 600);
         }
+        setTimeout(finish, 3000);
+        window.addEventListener('load', finish);
     });
     </script>
 </body>
