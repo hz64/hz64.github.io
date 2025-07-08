@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <title>ZeAy</title>
@@ -13,8 +12,7 @@
     <meta itemprop="name" content="ZeAy个人主页" />
     <meta itemprop="image" content="./assets/img/logo.png" />
     <meta name="description" itemprop="description" content="ZeAy个人主页" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no minimal-ui">
     <link rel="icon" href="./assets/img/logo.png" type="image/x-icon" />
     <meta name="robots" content="index,follow">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
@@ -23,12 +21,9 @@
         .icon-animate {
             transition: transform 0.2s cubic-bezier(.4, 2, .6, 1);
         }
-
         .icon-animate:hover {
             transform: scale(1.18) rotate(-8deg);
         }
-
-        /* 全屏加载动画样式 */
         #page-loader {
             position: fixed;
             z-index: 9999;
@@ -40,12 +35,10 @@
             justify-content: center;
             transition: opacity 0.5s;
         }
-
         #page-loader.hide {
             opacity: 0;
             pointer-events: none;
         }
-
         .loader-bar-wrap {
             width: 180px;
             height: 6px;
@@ -53,7 +46,6 @@
             border-radius: 3px;
             overflow: hidden;
         }
-
         .loader-bar {
             height: 100%;
             width: 0;
@@ -61,19 +53,12 @@
             border-radius: 3px;
             animation: loader-bar-move 1.2s cubic-bezier(.4, 2, .6, 1) forwards;
         }
-
         @keyframes loader-bar-move {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 100%;
-            }
+            from { width: 0; }
+            to { width: 100%; }
         }
     </style>
 </head>
-
 <body>
     <div id="page-loader">
         <img src="./assets/img/logo.png" alt="logo" style="width:48px;height:48px;margin-bottom:18px;display:block;border-radius:16px;" />
@@ -149,13 +134,42 @@
         </div>
     </div>
     <script>
-        window.addEventListener('load', function () {
-            var loader = document.getElementById('page-loader');
+    window.addEventListener('DOMContentLoaded', function () {
+        var loader = document.getElementById('page-loader');
+        var bar = document.querySelector('.loader-bar');
+        var images = Array.from(document.images);
+        var loadedCount = 0;
+        function setBar(percent) {
+            bar.style.width = percent + '%';
+        }
+        if (images.length === 0) {
+            setBar(100);
+            hideLoader();
+            return;
+        }
+        images.forEach(function (img) {
+            if (img.complete) {
+                check();
+            } else {
+                img.addEventListener('load', check);
+                img.addEventListener('error', check);
+            }
+        });
+        function check() {
+            loadedCount++;
+            var percent = Math.round((loadedCount / images.length) * 100);
+            setBar(percent);
+            if (loadedCount >= images.length) {
+                setTimeout(hideLoader, 300);
+            }
+        }
+        function hideLoader() {
             loader.classList.add('hide');
             setTimeout(function () {
                 loader.style.display = 'none';
             }, 600);
-        });
+        }
+    });
     </script>
 </body>
 </html>
