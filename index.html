@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
@@ -10,121 +10,152 @@
     <meta name="copyright" content="ZeAy">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="cache-control" content="no-cache">
-    <meta itemprop="name" content="ZeAy" />
-    <meta itemprop="image" content="./logo.png" />
-    <meta name="description" itemprop="description" content="做一个安静的程序员" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no minimal-ui">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <meta itemprop="name" content="ZeAy个人主页" />
+    <meta itemprop="image" content="./assets/img/logo.png" />
+    <meta name="description" itemprop="description" content="ZeAy个人主页" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no minimal-ui">
+    <link rel="icon" href="./assets/img/logo.png" type="image/x-icon" />
     <meta name="robots" content="index,follow">
-
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/font_1092713_tcnnod74va9.css">
     <style>
-        /* 页面淡入动画 */
-        body {
-            opacity: 0;
-            animation: fadeIn 1s ease-in-out forwards;
+        .icon-animate {
+            transition: transform 0.2s cubic-bezier(.4, 2, .6, 1);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .icon-animate:hover {
+            transform: scale(1.18) rotate(-8deg);
         }
 
-        /* 链接优化 */
-        a {
-            text-decoration: none;
-            color: #ffb7c5;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-
-        a:hover {
-            color: #ff728e;
-            border-bottom: 2px solid #ffb7c5;
-        }
-
-        /* 按钮优化（可选） */
-        button {
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            background-color: #ffb7c5;
-        }
-
-        /* 旋转动画 */
-        .rotate {
-            animation: rotate 5s linear infinite;
-        }
-
-        @keyframes rotate {
-            30% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* 吉祥物样式 */
-        .mascot {
+        /* 全屏加载动画样式 */
+        #page-loader {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
-            z-index: 1000;
+            z-index: 9999;
+            inset: 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        #page-loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-bar-wrap {
+            width: 180px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .loader-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #222 0%, #555 100%);
+            border-radius: 3px;
+            animation: loader-bar-move 1.2s cubic-bezier(.4, 2, .6, 1) forwards;
+        }
+
+        @keyframes loader-bar-move {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- 网页主体框架 -->
-    <!-- 头像 -->
-    <a href=""><img src="./logo.png" width="50" alt="Logo" class="rotate"></a>
-    <!-- 大标题 -->
-    <h1>ZeAy</h1>
-    <!-- 简介 -->
-    <p>海内存知己，天涯若比邻</p>
-    <hr>
-    <!-- 下部分 -->
-    <h3>我的站点</h3>
-    <a href="https://blog.hz6.us.kg/">博客</a>
-    <br>
-    <a href="./zy/">资源站</a>
-    <br>
-    <a href="./zc/">支持我</a>
-    <br>
-    <a href="./gd.html">更多</a>
-    <hr>
-    <a href="https://hz6.dpdns.org/" style="display: inline-block;">
-        数据库查询平台
-        <span style="
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background: #ff3b30;
-        color: #fff;
-        font-size: 14px;
-        font-weight: bold;
-        border-radius: 4px;
-        text-align: center;
-        line-height: 22px;
-        vertical-align: middle;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-    ">热</span>
-    </a>
-    <hr>
-    <!-- 版权声明 -->
-    Copyright © 2025 - <a href="https://hz64.github.io/">ZeAy</a> All Rights Reserved.
-    <br>
-    <a href="mailto:hz64@outlook.sg">hz64@outlook.sg</a> | <a href="https://t.me/x8869">@x8869</a> | <a href="https://t.me/x88873">Telegram频道</a>
-    <br>
-
-    <img src="/10.png" alt="10" class="mascot">
+    <div id="page-loader">
+        <img src="./assets/img/logo.png" alt="logo" style="width:48px;height:48px;margin-bottom:18px;display:block;border-radius:16px;" />
+        <div class="loader-bar-wrap">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+    <div class="centent">
+        <div class="mian">
+            <div class="main-top">
+                <div class="main-top-title">
+                    <h1>ZeAy</h1>
+                    <a href=""><img src="./assets/img/logo.png" alt="logo"></a>
+                </div>
+                <div class="main-top-Brief">
+                    <p>海内存知己，天涯若比邻</p>
+                </div>
+            </div>
+            <div class="main-bot">
+                <div class="main-bot-tb">
+                    <a href="mailto:hz64@outlook.sg" class="main-bot-tb-1" title="邮箱">
+                        <img src="./assets/img/mail.svg" alt="邮箱" width="32" height="32" class="icon-animate" />
+                    </a>
+                    <a href="https://github.com/hz64" class="main-bot-tb-2" title="Github">
+                        <img src="./assets/img/github.svg" alt="Github" width="32" height="32" class="icon-animate" />
+                    </a>
+                </div>
+                <div class="main-bot-title">
+                   <h3>我的站点</h3>
+                </div>
+                <div class="main-bot-nr">
+                    <a href="https://blog.hz6.us.kg/" class="main-bot-nr-kp">
+                        <div class="main-bot-nr-kp-k">
+                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/blog.svg" alt="博客" class="kkk"></div>
+                            <div class="main-bot-nr-kp-k-n">
+                                <span class="p1">博客</span>
+                                <span class="p2">写点没知识的文章</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="./zy/" class="main-bot-nr-kp">
+                        <div class="main-bot-nr-kp-k">
+                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/zy.svg" alt="资源站" class="kkk"></div>
+                            <div class="main-bot-nr-kp-k-n">
+                                <span class="p1">资源站</span>
+                                <span class="p2">分享点资源提供下载</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="./zc/" class="main-bot-nr-kp">
+                        <div class="main-bot-nr-kp-k">
+                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/zs.svg" alt="支持我" class="kkk"></div>
+                            <div class="main-bot-nr-kp-k-n">
+                                <span class="p1">支持我</span>
+                                <span class="p2">请我喝杯咖啡吧</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="./gd.html" class="main-bot-nr-kp">
+                        <div class="main-bot-nr-kp-k">
+                            <div class="main-bot-nr-kp-k-img"><img src="./assets/img/gd.svg" alt="更多" class="kkk"></div>
+                            <div class="main-bot-nr-kp-k-n">
+                                <span class="p1">更多</span>
+                                <span class="p2">很多好玩的没放出来</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Copyright © 2025 - <a href="" class="footer-link">ZeAy</a> All Rights Reserved.
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var loader = document.getElementById('page-loader');
+            loader.classList.add('hide');
+            setTimeout(function () {
+                loader.style.display = 'none';
+            }, 600);
+        });
+    </script>
 </body>
 </html>
