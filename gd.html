@@ -1,97 +1,167 @@
 <!DOCTYPE html>
-<title>更多 - ZeAy</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<body style="background-color:#FFFFFF;">
-<html>
+<html lang="zh">
 <head>
-    <style>
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        }
-        
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        
-        .dropdown-content a:hover {background-color: #b3b3b3}
-        
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        
-        .dropdown:hover .dropbtn {
-            background-color: #E297A4;
-        }
-        </style>
+  <meta charset="UTF-8">
+  <title>更多 - ZeAy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      font-family: monospace, sans-serif;
+      color: #000;
+      animation: fadeIn 0.5s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 30px 0 10px;
+      font-weight: normal;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      width: 80%;
+      margin: 10px auto 30px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      max-width: 900px;
+      margin: 0 auto 50px;
+      border-top: 1px solid #000;
+      border-left: 1px solid #000;
+    }
+
+    .section {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .section:hover {
+      transform: scale(1.03); /* 整体卡片放大 */
+    }
+
+    .section h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 0 10px;
+      border-bottom: 1px solid #000;
+      padding-bottom: 4px;
+    }
+
+    .section a {
+      display: block;
+      text-decoration: none;
+      color: #000;
+      font-size: 14px;
+      margin-bottom: 4px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .section a:hover {
+      color: #444;
+      transform: scale(1.05); /* 链接文字放大 */
+    }
+
+    .section a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: #000;
+      transition: width 0.3s;
+    }
+
+    .section a:hover::after {
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      padding: 20px 10px;
+      border-top: 1px solid #000;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <h2>更多</h2>
-    <hr>
 
-    <div class="dropdown" style="float:left;">
-        <button class="dropbtn">在线服务</button>
-        <div class="dropdown-content" style="left:0;">
-          <a href="./a/tspt">学校教育局投诉平台</a>
-          <a href="https://hx.hz6.us.kg/">数据库查询系统</a>
-          <a href="https://pan.hz6.us.kg/">Alist在线云盘</a>
-        </div>
-      </div>
+  <h2>更多</h2>
+  <hr>
 
-      <div class="dropdown" style="float:left;">
-        <button class="dropbtn">小游戏</button>
-        <div class="dropdown-content" style="left:0;">
-          <a href="./b/xyxhj1">手机小游戏合集</a>
-          <a href="./a/yx/sl/">扫雷小游戏</a>
-          <a href="./a/yx/sc/">3D 赛车</a>
-          <a href="">我的世界1.8.8 Java版</a>
-          <a href="./b/catch-the-cat-master">圈小猫canvas游戏</a>
-          <a href="./a/tz/">奔跑吧浩泽</a>
-          <a href="./b/ngd-b.github.io-master">超级玛丽</a>
-          <a href="./b/FruitNinja">切水果(推荐电脑)</a>
-          <a href="./b/html5-fly">打飞机</a>
-          <a href="./b/bydr">捕鱼达人</a>
-        </div>
-      </div>
+  <div class="container">
+    <div class="section">
+      <h3>在线服务</h3>
+      <a href="./a/tspt">学校教育局投诉平台</a>
+      <a href="https://hx.hz6.us.kg/">数据库查询系统</a>
+      <a href="https://pan.hz6.us.kg/">Alist在线云盘</a>
+    </div>
 
-      <div class="dropdown" style="float:left;">
-        <button class="dropbtn">工具箱</button>
-        <div class="dropdown-content" style="left:0;">
-          <a href="./zimg.html">ZeAy图片加密算法</a>
-          <a href="./a/ms/">网易云音乐</a>
-          <a href="./a/mm/">密码生成工具</a>
-          <a href="./a/3DCS.html">3D测试</a>
-          <a href="./b/fish/fish.html">鱼缸测试</a>
-          <a href="./a/html-vc">HTML编辑器</a>
-          <a href="./b/m3u8-downloader">M3U8下载器</a>
-          <a href="./b/KaliToolsManual">Kali工具说明书</a>
-          <a href="./a/mcpf">我的世界皮肤包</a>
-            <a href="./a/ll">流量消耗器</a>
-            <a href="./a/app/com.zeay.rgbxr">小泽渲染</a>
-        </div>
-      </div>
+    <div class="section">
+      <h3>小游戏</h3>
+      <a href="./b/xyxhj1">手机小游戏合集</a>
+      <a href="./a/yx/sl/">扫雷小游戏</a>
+      <a href="./a/yx/sc/">3D 赛车</a>
+      <a href="#">我的世界1.8.8 Java版</a>
+      <a href="./b/catch-the-cat-master">圈小猫canvas游戏</a>
+      <a href="./a/tz/">奔跑吧浩泽</a>
+      <a href="./b/ngd-b.github.io-master">超级玛丽</a>
+      <a href="./b/FruitNinja">切水果</a>
+      <a href="./b/html5-fly">打飞机</a>
+      <a href="./b/bydr">捕鱼达人</a>
+    </div>
 
-    <div class="dropdown" style="float:left;">
-        <button class="dropbtn">APP应用</button>
-        <div class="dropdown-content" style="left:0;">
-          <a href="./a/app/zepw.ze">ZePW</a>
-        </div>
-      </div>
+    <div class="section">
+      <h3>工具箱</h3>
+      <a href="./zimg.html">ZeAy图片加密算法</a>
+      <a href="./a/ms/">网易云音乐</a>
+      <a href="./a/mm/">密码生成工具</a>
+      <a href="./a/3DCS.html">3D测试</a>
+      <a href="./b/fish/fish.html">鱼缸测试</a>
+      <a href="./a/html-vc">HTML编辑器</a>
+      <a href="./b/m3u8-downloader">M3U8下载器</a>
+      <a href="./b/KaliToolsManual">Kali工具说明书</a>
+      <a href="./a/mcpf">我的世界皮肤包</a>
+      <a href="./a/ll">流量消耗器</a>
+      <a href="./a/app/com.zeay.rgbxr">小泽渲染</a>
+    </div>
 
-      <div class="dropdown" style="float:left;">
-        <button class="dropbtn">H5动画</button>
-        <div class="dropdown-content" style="left:0;">
-          <a href="./a/dh/sk/">樱花飘落动画</a>
-        </div>
-      </div>
+    <div class="section">
+      <h3>APP 应用</h3>
+      <a href="./a/app/zepw.ze">ZePW</a>
+    </div>
+
+    <div class="section">
+      <h3>H5 动画</h3>
+      <a href="./a/dh/sk/">樱花飘落动画</a>
+    </div>
+  </div>
+
+  <footer>
+    ZeAy © 2025
+  </footer>
 
 </body>
 </html>
