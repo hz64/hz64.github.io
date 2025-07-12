@@ -16,7 +16,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .card {
       background: white;
       padding: 30px 24px;
@@ -27,15 +26,12 @@
       text-align: center;
       animation: fadeIn 0.6s ease;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     h1 { font-size: 24px; margin-bottom: 6px; color: #222; }
     .subtitle { font-size: 14px; color: #666; margin-bottom: 20px; }
-
     .ip-box {
       background: #f9f9f9;
       padding: 10px 14px;
@@ -46,27 +42,23 @@
       margin-bottom: 18px;
       word-break: break-word;
     }
-
     .server-info {
       font-size: 14px;
       color: #555;
       margin-bottom: 12px;
       line-height: 1.6;
     }
-
     .version-info {
       font-size: 13px;
       color: #666;
       margin-bottom: 20px;
       line-height: 1.5;
     }
-
     .btn-group {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-
     .btn {
       padding: 12px;
       font-size: 15px;
@@ -75,10 +67,8 @@
       cursor: pointer;
       transition: background-color 0.25s ease;
     }
-
     .copy-btn { background-color: #007bff; color: white; }
     .copy-btn:hover { background-color: #0069d9; }
-
     .join-btn {
       background-color: #28a745;
       color: white;
@@ -86,9 +76,7 @@
       display: inline-block;
       text-align: center;
     }
-
     .join-btn:hover { background-color: #218838; }
-
     .download-btn {
       display: block;
       background-color: #ff9800;
@@ -101,11 +89,9 @@
       border-radius: 8px;
       transition: background-color 0.25s ease;
     }
-
     .download-btn:hover {
       background-color: #f57c00;
     }
-
     @media (min-width: 600px) {
       .btn-group { flex-direction: row; justify-content: space-between; }
       .btn { flex: 1; }
@@ -116,29 +102,21 @@
   <div class="card">
     <h1>Minecraft 服务器</h1>
     <div class="subtitle">欢迎加入 Xiaoze 的世界</div>
-
     <div class="ip-box" id="server-ip">play.simpfun.cn:17412</div>
-
-    <div class="server-info" id="server-status">
-      正在获取服务器状态...
-    </div>
-
+    <div class="server-info" id="server-status">正在获取服务器状态...</div>
     <div class="version-info">
       支持版本：<br>
       ☕ Java版 1.20 ~ 1.21.7<br>
       📱 Bedrock版 1.21.50 ~ 1.21.93
     </div>
-
     <div class="btn-group">
       <button class="btn copy-btn" onclick="copyIP()">复制地址</button>
       <a class="btn join-btn" href="minecraft://?addExternalServer=Xiaoze|play.simpfun.cn:17412">一键加入</a>
     </div>
-
     <a class="download-btn" href="https://bbk.endyun.ltd/s/1-21-93-1v8" target="_blank">
       下载 Bedrock 基岩版客户端
     </a>
   </div>
-
   <script>
     function copyIP() {
       const ip = document.getElementById("server-ip").textContent;
@@ -149,26 +127,24 @@
       });
     }
 
-    // 获取服务器状态
     const statusDiv = document.getElementById("server-status");
-    const apiUrl = "https://api.mcsrvstat.us/3/play.simpfun.cn:17412";
 
-    fetch(apiUrl)
+    fetch("https://api.mcstatus.io/v2/status/bedrock/play.simpfun.cn:17412")
       .then(res => res.json())
       .then(data => {
         if (!data.online) {
-          statusDiv.innerHTML = "服务器状态：<b style='color: red;'>离线</b>";
+          statusDiv.innerHTML = "服务器状态：<b style='color: red;'>离线（保护中正常运行）</b>";
         } else {
           statusDiv.innerHTML = `
             服务器状态：<b style='color: green;'>在线</b><br>
             在线人数：<b>${data.players.online}</b> / ${data.players.max}<br>
-            延迟：<b>${data.debug.ping ? "正常" : "未知"}</b>
+            延迟：<b>${data.latency} ms</b><br>
+            MOTD：${data.motd.clean}
           `;
         }
       })
-      .catch(err => {
+      .catch(() => {
         statusDiv.innerHTML = "获取服务器状态失败。";
-        console.error("错误:", err);
       });
   </script>
 </body>
