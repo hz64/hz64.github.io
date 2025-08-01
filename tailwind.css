@@ -1,0 +1,5 @@
+
+/* Tailwind 预编译样式（示例，仅保留基础样式） */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
