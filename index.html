@@ -10,71 +10,112 @@
   <style>
     body {
       margin: 0;
-      background: #dcdcdc;
-      color: #222;
-      font-family: monospace;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #202124;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
     .main {
+      width: 100%;
       max-width: 800px;
-      margin: 0 auto;
       padding: 40px 20px;
-    }
-    .main-top {
       text-align: center;
-      margin-bottom: 30px;
     }
-    .main-top img {
-      width: 64px;
-      height: 64px;
-      border-radius: 8px;
-      margin-top: 10px;
+    h1 {
+      min-height: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+    }
+    h1::after {
+      content: '|';
+      display: inline-block;
+      width: auto;
+      height: auto;
+      font-size: 1.5em;
+      line-height: 0.5;
+      background-color: transparent;
+      color: #202124;
+      margin-left: 2px;
+      animation: blink-smooth 0.8s infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink-smooth {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    #logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      margin-left: 6px;
+      animation: follow 0.4s ease-in-out infinite alternate;
+      transition: opacity 0.5s ease-in-out; 
+    }
+    @keyframes follow {
+      from { transform: translateX(0); }
+      to { transform: translateX(3px); }
     }
     .main-top p {
-      color: #666;
+      color: #5f6368;
       margin-top: 10px;
+      font-size: 14px;
+    }
+    .socials {
+      margin-top: 16px;
+    }
+    .socials img {
+      width: 28px;
+      height: 28px;
+      margin: 0 8px;
+      filter: grayscale(100%);
+      transition: filter 0.3s;
+    }
+    .socials img:hover {
+      filter: grayscale(0%);
     }
     .links {
       display: grid;
       gap: 20px;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      margin-top: 30px;
+      margin-top: 40px;
     }
     .link-item {
-      border: 1px dashed #888;
+      background: #f8f9fa;
       padding: 20px;
-      text-align: center;
-      background: #eee;
+      border-radius: 12px;
       text-decoration: none;
-      color: #000;
-      transition: background 0.2s;
+      color: #202124;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: all 0.2s ease;
+      font-size: 16px;
+    }
+    .link-item small {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: #5f6368;
     }
     .link-item:hover {
-      background: #ddd;
+      transform: scale(1.03);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      background: #ffffff;
     }
     .footer {
-      margin-top: 40px;
+      margin-top: 50px;
       font-size: 12px;
-      text-align: center;
-      color: #999;
-      border-top: 1px dashed #aaa;
-      padding-top: 20px;
-    }
-    .socials {
-      margin-top: 10px;
-    }
-    .socials img {
-      width: 28px;
-      height: 28px;
-      margin: 0 6px;
-      vertical-align: middle;
+      color: #9aa0a6;
     }
   </style>
 </head>
 <body>
   <div class="main">
     <div class="main-top">
-      <h1>ZeAy</h1>
-      <img src="./assets/img/logo.png" alt="logo">
+      <h1><span id="text"></span><img id="logo" src="./assets/img/logo.png" alt="logo"></h1>
       <p>海内存知己，天涯若比邻</p>
       <div class="socials">
         <a href="mailto:hz64@outlook.sg"><img src="./assets/img/mail.svg" alt="邮箱"></a>
@@ -82,17 +123,58 @@
         <a href="https://t.me/x8869"><img src="./assets/img/telegram.svg" alt="telegram"></a>
       </div>
     </div>
-
     <div class="links">
-      <a class="link-item" href="https://blog.hz6.us.kg/">博客<br><small>写点没知识的文章</small></a>
-      <a class="link-item" href="./zy/">资源站<br><small>分享点资源</small></a>
-      <a class="link-item" href="./zc/">支持我<br><small>请我喝咖啡</small></a>
-      <a class="link-item" href="./gd.html">更多<br><small>还有没放出的</small></a>
+      <a class="link-item" href="https://blog.hz6.us.kg/">博客<small>写点没知识的文章</small></a>
+      <a class="link-item" href="./zy/">资源站<small>分享点资源</small></a>
+      <a class="link-item" href="./zc/">支持我<small>请我喝咖啡</small></a>
+      <a class="link-item" href="./gd.html">更多<small>还有没放出的</small></a>
     </div>
-
     <div class="footer">
       Copyright © 2025 ZeAy. All Rights Reserved.
     </div>
   </div>
+  <script>
+    const titles = ["ZeAy", "小泽"];
+    let currentTitle = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const textElement = document.getElementById("text");
+    const logoElement = document.getElementById("logo");
+
+    function typeEffect() {
+      let currentText = titles[currentTitle];
+
+      if (isDeleting) {
+        charIndex--;
+      } else {
+        charIndex++;
+      }
+
+      textElement.textContent = currentText.substring(0, charIndex);
+
+      if (charIndex === 0 && isDeleting) {
+        logoElement.style.opacity = '0';
+      } 
+      else if (charIndex > 0) {
+        logoElement.style.opacity = '1';
+      }
+
+      if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1500);
+        return;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        currentTitle = (currentTitle + 1) % titles.length;
+        setTimeout(typeEffect, 800);
+        return;
+      }
+
+      setTimeout(typeEffect, isDeleting ? 80 : 120);
+    }
+
+    logoElement.style.opacity = '0'; 
+    typeEffect();
+  </script>
 </body>
 </html>
