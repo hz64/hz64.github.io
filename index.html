@@ -3,133 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>ZeAy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ZeAy个人主页">
   <meta name="keywords" content="ZeAy">
   <link rel="icon" href="./assets/img/logo.png" type="image/x-icon" />
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: #fff;
-      color: #202124;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    .main {
-      width: 100%;
-      max-width: 800px;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    h1 {
-      min-height: 2.5rem;
-      display: inline-flex;
-      align-items: center;
-      position: relative;
-    }
-    h1::after {
-      content: '|';
-      display: inline-block;
-      width: auto;
-      height: auto;
-      font-size: 1.5em;
-      line-height: 0.5;
-      background-color: transparent;
-      color: #202124;
-      margin-left: 2px;
-      animation: blink-smooth 0.8s infinite;
-      vertical-align: middle;
-    }
-    @keyframes blink-smooth {
-      0% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-    #logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      margin-left: 6px;
-      animation: follow 0.4s ease-in-out infinite alternate;
-      transition: opacity 0.5s ease-in-out; 
-    }
-    @keyframes follow {
-      from { transform: translateX(0); }
-      to { transform: translateX(3px); }
-    }
-    .main-top p {
-      color: #5f6368;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-    .socials {
-      margin-top: 16px;
-    }
-    .socials img {
-      width: 28px;
-      height: 28px;
-      margin: 0 8px;
-      filter: grayscale(100%);
-      transition: filter 0.3s;
-    }
-    .socials img:hover {
-      filter: grayscale(0%);
-    }
-    .links {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      margin-top: 40px;
-    }
-    .link-item {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #202124;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: all 0.2s ease;
-      font-size: 16px;
-    }
-    .link-item small {
-      display: block;
-      margin-top: 4px;
-      font-size: 12px;
-      color: #5f6368;
-    }
-    .link-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      background: #ffffff;
-    }
-    .footer {
-      margin-top: 50px;
-      font-size: 12px;
-      color: #9aa0a6;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="main">
-    <div class="main-top">
-      <h1><span id="text"></span><img id="logo" src="./assets/img/logo.png" alt="logo"></h1>
-      <p>海内存知己，天涯若比邻</p>
-      <div class="socials">
-        <a href="mailto:hz64@outlook.sg"><img src="./assets/img/mail.svg" alt="邮箱"></a>
-        <a href="https://github.com/hz64"><img src="./assets/img/github.svg" alt="github"></a>
-        <a href="https://t.me/x8869"><img src="./assets/img/telegram.svg" alt="telegram"></a>
+<body class="bg-white text-gray-900 flex items-center justify-center min-h-screen font-sans">
+  <div class="w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-12 text-center">
+    <div class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-semibold flex items-center justify-center">
+        <span id="text"></span>
+        <img id="logo" src="./assets/img/logo.png" alt="logo" class="w-8 h-8 sm:w-10 sm:h-10 ml-2 rounded-lg transition-opacity duration-500">
+      </h1>
+      <p class="mt-2 text-gray-600 text-sm sm:text-base">海内存知己，天涯若比邻</p>
+      <div class="mt-4 flex justify-center gap-4">
+        <a href="mailto:hz64@outlook.sg">
+          <img src="./assets/img/mail.svg" alt="邮箱" class="w-6 h-6 sm:w-7 sm:h-7 opacity-60 hover:opacity-100 transition-opacity">
+        </a>
+        <a href="https://github.com/hz64">
+          <img src="./assets/img/github.svg" alt="github" class="w-6 h-6 sm:w-7 sm:h-7 opacity-60 hover:opacity-100 transition-opacity">
+        </a>
+        <a href="https://t.me/x8869">
+          <img src="./assets/img/telegram.svg" alt="telegram" class="w-6 h-6 sm:w-7 sm:h-7 opacity-60 hover:opacity-100 transition-opacity">
+        </a>
       </div>
     </div>
-    <div class="links">
-      <a class="link-item" href="https://blog.hz6.us.kg/">博客<small>写点没知识的文章</small></a>
-      <a class="link-item" href="./zy/">资源站<small>分享点资源</small></a>
-      <a class="link-item" href="./zc/">支持我<small>请我喝咖啡</small></a>
-      <a class="link-item" href="./gd.html">更多<small>还有没放出的</small></a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8">
+      <a href="https://blog.hz6.us.kg/" class="p-4 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="text-lg font-medium">博客</div>
+        <div class="text-sm text-gray-500">写点没知识的文章</div>
+      </a>
+      <a href="./zy/" class="p-4 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="text-lg font-medium">资源站</div>
+        <div class="text-sm text-gray-500">分享点资源</div>
+      </a>
+      <a href="./zc/" class="p-4 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="text-lg font-medium">支持我</div>
+        <div class="text-sm text-gray-500">请我喝咖啡</div>
+      </a>
+      <a href="./gd.html" class="p-4 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="text-lg font-medium">更多</div>
+        <div class="text-sm text-gray-500">还有没放出的</div>
+      </a>
     </div>
-    <div class="footer">
+    <div class="mt-12 text-gray-400 text-xs sm:text-sm">
       Copyright © 2025 ZeAy. All Rights Reserved.
     </div>
   </div>
@@ -154,8 +72,7 @@
 
       if (charIndex === 0 && isDeleting) {
         logoElement.style.opacity = '0';
-      } 
-      else if (charIndex > 0) {
+      } else if (charIndex > 0) {
         logoElement.style.opacity = '1';
       }
 
@@ -173,7 +90,7 @@
       setTimeout(typeEffect, isDeleting ? 80 : 120);
     }
 
-    logoElement.style.opacity = '0'; 
+    logoElement.style.opacity = '0';
     typeEffect();
   </script>
 </body>
