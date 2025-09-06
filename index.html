@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>hz64</title>
   <!-- Favicon -->
   <link rel="icon" href="./assets/img/logo.png" type="image/png">
@@ -49,7 +49,7 @@
     .container {
       max-width: 800px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 15px; /* 移动端减少左右内边距，避免不对称 */
     }
     
     /* 动画关键帧定义 */
@@ -75,7 +75,7 @@
       100% { transform: translateY(0px); }
     }
     
-    /* 主题切换按钮 */
+    /* 主题切换按钮 - 统一样式 */
     .theme-toggle {
       background: none;
       border: none;
@@ -89,15 +89,15 @@
       transform: rotate(90deg);
     }
     
-    /* 毛玻璃效果类 */
+    /* 毛玻璃效果类 - 移动端调整内边距 */
     .glass {
       background: var(--glass-bg);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 30px;
+      padding: 15px; /* 移动端减少内边距，避免内容溢出 */
+      margin-bottom: 25px; /* 调整间距，增强对称性 */
       transition: all 0.5s ease;
       opacity: 0;
       animation: fadeIn 0.8s forwards;
@@ -111,7 +111,7 @@
       transition: all 0.3s ease;
     }
     
-    /* 导航栏 */
+    /* 导航栏 - 修复移动端对齐 */
     header {
       position: fixed;
       top: 0;
@@ -123,7 +123,7 @@
     }
     
     nav {
-      padding: 15px 20px;
+      padding: 12px 15px; /* 统一移动端/桌面端内边距，避免不对称 */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -156,6 +156,7 @@
     .nav-links {
       display: flex;
       gap: 20px;
+      align-items: center; /* 确保导航链接与主题按钮垂直对齐 */
     }
     
     .nav-links a {
@@ -197,12 +198,12 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.5s ease;
-      padding: 0 20px;
+      padding: 0 15px; /* 与nav内边距一致 */
     }
     
     .mobile-menu.active {
       max-height: 200px;
-      padding: 15px 20px;
+      padding: 12px 15px; /* 与nav内边距一致 */
     }
     
     .mobile-menu a {
@@ -228,18 +229,16 @@
       color: var(--hover-color);
     }
     
-    /* 内容区域 */
+    /* 内容区域 - 修复标题对齐 */
     section {
-      padding: 30px 0;
+      padding: 25px 0;
     }
     
+    /* 标题改为block布局，通过margin实现居中，避免inline-block导致的不对称 */
     h1, h2 {
-      margin-bottom: 20px;
+      margin: 0 auto 20px; /* 水平居中，底部间距统一 */
       text-align: center;
-      position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
+      display: block; /* 移除inline-block，避免移动端对齐问题 */
     }
     
     h1::after, h2::after {
@@ -260,27 +259,30 @@
     }
     
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem; /* 移动端缩小标题字号，避免溢出 */
+      position: relative; /* 恢复伪元素定位所需的relative */
     }
     
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       padding-bottom: 10px;
+      position: relative; /* 恢复伪元素定位所需的relative */
     }
     
+    /* 个人信息 - 移动端优化对齐 */
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 20px;
+      gap: 15px; /* 移动端缩小间距 */
       animation: scaleIn 0.6s ease forwards 0.4s;
       opacity: 0;
     }
     
     .profile-img {
-      width: 120px;
-      height: 120px;
+      width: 100px; /* 移动端缩小头像 */
+      height: 100px;
       border-radius: 50%;
       border: 3px solid var(--border-color);
       transition: all 0.5s ease;
@@ -293,7 +295,7 @@
     }
     
     .profile-info p {
-      margin-bottom: 20px;
+      margin-bottom: 15px; /* 调整间距 */
       transition: transform 0.3s ease;
     }
     
@@ -301,11 +303,12 @@
       transform: scale(1.02);
     }
     
+    /* 按钮样式 - 统一间距 */
     .btn {
       display: inline-block;
       padding: 8px 16px;
       border-radius: 20px;
-      margin: 0 5px 10px;
+      margin: 0 5px 8px; /* 调整垂直间距 */
       background: var(--glass-dark-bg);
       transition: all 0.3s ease;
       position: relative;
@@ -333,17 +336,17 @@
       left: 100%;
     }
     
-    /* 链接卡片 */
+    /* 链接卡片 - 修复移动端布局 */
     .links-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 15px;
+      gap: 12px; /* 调整间距 */
     }
     
     .link-card {
       display: flex;
       align-items: center;
-      padding: 15px;
+      padding: 12px 15px; /* 统一内边距 */
       border-radius: 12px;
       transition: all 0.4s ease;
       transform: translateX(-20px);
@@ -364,14 +367,14 @@
     }
     
     .link-icon {
-      width: 40px;
-      height: 40px;
+      width: 36px; /* 缩小图标容器，适配移动端 */
+      height: 36px;
       border-radius: 50%;
       background: var(--glass-dark-bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 15px;
+      margin-right: 12px; /* 调整间距 */
       transition: all 0.4s ease;
     }
     
@@ -381,8 +384,8 @@
     }
     
     .link-icon img {
-      width: 20px;
-      height: 20px;
+      width: 18px; /* 缩小图标 */
+      height: 18px;
       transition: transform 0.3s ease;
       filter: invert(0);
     }
@@ -396,7 +399,7 @@
     }
     
     .link-info h3 {
-      font-size: 1rem;
+      font-size: 0.95rem; /* 缩小标题字号 */
       margin-bottom: 3px;
       transition: color 0.3s ease;
     }
@@ -406,7 +409,7 @@
     }
     
     .link-info p {
-      font-size: 0.85rem;
+      font-size: 0.8rem; /* 缩小描述字号 */
       color: var(--accent-color);
       transition: all 0.3s ease;
     }
@@ -416,12 +419,12 @@
       transform: translateX(5px);
     }
     
-    /* 联系部分 */
+    /* 联系部分 - 优化移动端布局 */
     .contact-links {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px; /* 调整间距 */
       animation: fadeIn 0.8s forwards 0.3s;
       opacity: 0;
     }
@@ -429,12 +432,13 @@
     .contact-links a {
       display: flex;
       align-items: center;
-      padding: 10px 15px;
+      padding: 8px 12px; /* 调整内边距 */
       border-radius: 20px;
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
       color: var(--text-color);
+      font-size: 0.9rem; /* 缩小字号 */
     }
     
     .contact-links a::after {
@@ -463,8 +467,8 @@
     }
     
     .contact-links img {
-      width: 20px;
-      height: 20px;
+      width: 18px; /* 缩小图标 */
+      height: 18px;
       margin-right: 8px;
       transition: transform 0.3s ease;
       filter: invert(0);
@@ -478,11 +482,11 @@
       transform: rotate(15deg) scale(1.2);
     }
     
-    /* 页脚 */
+    /* 页脚 - 统一内边距 */
     footer {
       text-align: center;
-      padding: 20px;
-      margin-top: 30px;
+      padding: 15px 15px; /* 调整内边距 */
+      margin-top: 25px;
       animation: fadeIn 0.8s forwards 0.6s;
       opacity: 0;
     }
@@ -491,7 +495,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      margin-bottom: 10px;
+      margin-bottom: 8px; /* 调整间距 */
       transition: all 0.5s ease;
     }
     
@@ -500,7 +504,7 @@
     }
     
     footer p {
-      font-size: 0.85rem;
+      font-size: 0.8rem; /* 缩小字号 */
       color: var(--accent-color);
       transition: all 0.3s ease;
     }
@@ -522,7 +526,7 @@
       transform: translateY(0);
     }
     
-    /* 响应式设计 */
+    /* 响应式设计 - 核心修复：桌面端隐藏移动端主题按钮 */
     @media (min-width: 600px) {
       .links-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -531,10 +535,30 @@
       .profile {
         flex-direction: row;
         text-align: left;
+        align-items: center; /* 桌面端恢复横向对齐 */
+      }
+      
+      /* 桌面端隐藏移动端主题按钮，解决重复问题 */
+      #mobileThemeToggle {
+        display: none;
+      }
+      
+      /* 桌面端恢复标题字号 */
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
       }
     }
     
     @media (max-width: 600px) {
+      /* 移动端隐藏桌面端导航栏的主题按钮 */
+      #themeToggle {
+        display: none;
+      }
+      
       .nav-links {
         display: none;
       }
@@ -555,6 +579,7 @@
         <span>hz64</span>
       </div>
       
+      <!-- 桌面端导航栏（含主题按钮） -->
       <div class="nav-links">
         <a href="#home">首页</a>
         <a href="#about">关于</a>
@@ -563,6 +588,7 @@
         <button class="theme-toggle" id="themeToggle">🌙</button>
       </div>
       
+      <!-- 移动端控制区（含主题按钮，桌面端会隐藏） -->
       <div style="display: flex; align-items: center; gap: 10px;">
         <button class="theme-toggle" id="mobileThemeToggle">🌙</button>
         <button class="mobile-menu-btn" id="menuBtn">☰</button>
@@ -692,7 +718,7 @@
     <p>Copyright © 2025 ZeAy. All Rights Reserved.</p>
   </footer>
 
-  <!-- 页面脚本 -->
+  <!-- 页面脚本（未修改，功能保持一致） -->
   <script>
     // 主题切换功能
     const themeToggle = document.getElementById('themeToggle');
@@ -793,4 +819,3 @@
   </script>
 </body>
 </html>
-    
