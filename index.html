@@ -2,820 +2,170 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>hz64</title>
-  <!-- Favicon -->
   <link rel="icon" href="./assets/img/logo.png" type="image/png">
-  
-  <style>
-    /* 基础样式与主题变量 */
-    :root {
-      --bg-color: #f5f5f5;
-      --text-color: #333333;
-      --glass-bg: rgba(255, 255, 255, 0.7);
-      --glass-dark-bg: rgba(200, 200, 200, 0.7);
-      --border-color: rgba(0, 0, 0, 0.1);
-      --accent-color: #555555;
-      --hover-color: #000000;
-    }
-    
-    .dark-mode {
-      --bg-color: #121212;
-      --text-color: #f0f0f0;
-      --glass-bg: rgba(30, 30, 30, 0.7);
-      --glass-dark-bg: rgba(50, 50, 50, 0.7);
-      --border-color: rgba(255, 255, 255, 0.1);
-      --accent-color: #aaaaaa;
-      --hover-color: #ffffff;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-    
-    body {
-      background-color: var(--bg-color);
-      min-height: 100vh;
-      color: var(--text-color);
-      padding-top: 60px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 15px; /* 移动端减少左右内边距，避免不对称 */
-    }
-    
-    /* 动画关键帧定义 */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes scaleIn {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-    
-    /* 主题切换按钮 - 统一样式 */
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: var(--text-color);
-      transition: transform 0.3s ease;
-    }
-    
-    .theme-toggle:hover {
-      transform: rotate(90deg);
-    }
-    
-    /* 毛玻璃效果类 - 移动端调整内边距 */
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 15px; /* 移动端减少内边距，避免内容溢出 */
-      margin-bottom: 25px; /* 调整间距，增强对称性 */
-      transition: all 0.5s ease;
-      opacity: 0;
-      animation: fadeIn 0.8s forwards;
-    }
-    
-    .glass-dark {
-      background: var(--glass-dark-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-    }
-    
-    /* 导航栏 - 修复移动端对齐 */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      transform: translateY(-100%);
-      animation: fadeIn 0.6s forwards 0.2s;
-    }
-    
-    nav {
-      padding: 12px 15px; /* 统一移动端/桌面端内边距，避免不对称 */
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .logo {
-      display: flex;
-      align-items: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-      transition: transform 0.3s ease;
-    }
-    
-    .logo:hover {
-      transform: scale(1.05);
-    }
-    
-    .logo img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin-right: 10px;
-      transition: transform 0.5s ease;
-    }
-    
-    .logo:hover img {
-      transform: rotate(360deg);
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      align-items: center; /* 确保导航链接与主题按钮垂直对齐 */
-    }
-    
-    .nav-links a {
-      position: relative;
-      padding: 5px 0;
-      color: var(--text-color);
-    }
-    
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: var(--hover-color);
-      transition: width 0.3s ease;
-    }
-    
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-color);
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .mobile-menu-btn:hover {
-      transform: rotate(90deg);
-    }
-    
-    .mobile-menu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-      padding: 0 15px; /* 与nav内边距一致 */
-    }
-    
-    .mobile-menu.active {
-      max-height: 200px;
-      padding: 12px 15px; /* 与nav内边距一致 */
-    }
-    
-    .mobile-menu a {
-      display: block;
-      margin-bottom: 10px;
-      padding: 5px 0;
-      color: var(--text-color);
-      transition: padding-left 0.3s ease;
-    }
-    
-    .mobile-menu a:hover {
-      padding-left: 10px;
-    }
-    
-    /* 链接样式 */
-    a {
-      color: var(--text-color);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    
-    a:hover {
-      color: var(--hover-color);
-    }
-    
-    /* 内容区域 - 修复标题对齐 */
-    section {
-      padding: 25px 0;
-    }
-    
-    /* 标题改为block布局，通过margin实现居中，避免inline-block导致的不对称 */
-    h1, h2 {
-      margin: 0 auto 20px; /* 水平居中，底部间距统一 */
-      text-align: center;
-      display: block; /* 移除inline-block，避免移动端对齐问题 */
-    }
-    
-    h1::after, h2::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 10%;
-      width: 80%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-      transform: scaleX(0);
-      transition: transform 0.5s ease;
-    }
-    
-    .glass:hover h1::after,
-    .glass:hover h2::after {
-      transform: scaleX(1);
-    }
-    
-    h1 {
-      font-size: 1.8rem; /* 移动端缩小标题字号，避免溢出 */
-      position: relative; /* 恢复伪元素定位所需的relative */
-    }
-    
-    h2 {
-      font-size: 1.4rem;
-      padding-bottom: 10px;
-      position: relative; /* 恢复伪元素定位所需的relative */
-    }
-    
-    /* 个人信息 - 移动端优化对齐 */
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 15px; /* 移动端缩小间距 */
-      animation: scaleIn 0.6s ease forwards 0.4s;
-      opacity: 0;
-    }
-    
-    .profile-img {
-      width: 100px; /* 移动端缩小头像 */
-      height: 100px;
-      border-radius: 50%;
-      border: 3px solid var(--border-color);
-      transition: all 0.5s ease;
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    .profile-img:hover {
-      transform: scale(1.1) rotate(10deg);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .profile-info p {
-      margin-bottom: 15px; /* 调整间距 */
-      transition: transform 0.3s ease;
-    }
-    
-    .profile-info:hover p {
-      transform: scale(1.02);
-    }
-    
-    /* 按钮样式 - 统一间距 */
-    .btn {
-      display: inline-block;
-      padding: 8px 16px;
-      border-radius: 20px;
-      margin: 0 5px 8px; /* 调整垂直间距 */
-      background: var(--glass-dark-bg);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      color: var(--text-color);
-    }
-    
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(100, 100, 100, 0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    .btn:hover::before {
-      left: 100%;
-    }
-    
-    /* 链接卡片 - 修复移动端布局 */
-    .links-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px; /* 调整间距 */
-    }
-    
-    .link-card {
-      display: flex;
-      align-items: center;
-      padding: 12px 15px; /* 统一内边距 */
-      border-radius: 12px;
-      transition: all 0.4s ease;
-      transform: translateX(-20px);
-      opacity: 0;
-      animation: fadeIn 0.6s forwards;
-      color: var(--text-color);
-    }
-    
-    .link-card:nth-child(1) { animation-delay: 0.1s; }
-    .link-card:nth-child(2) { animation-delay: 0.2s; }
-    .link-card:nth-child(3) { animation-delay: 0.3s; }
-    .link-card:nth-child(4) { animation-delay: 0.4s; }
-    .link-card:nth-child(5) { animation-delay: 0.5s; }
-    
-    .link-card:hover {
-      transform: translateX(5px) scale(1.02);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .link-icon {
-      width: 36px; /* 缩小图标容器，适配移动端 */
-      height: 36px;
-      border-radius: 50%;
-      background: var(--glass-dark-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 12px; /* 调整间距 */
-      transition: all 0.4s ease;
-    }
-    
-    .link-card:hover .link-icon {
-      transform: rotate(360deg);
-      background: rgba(100, 100, 100, 0.2);
-    }
-    
-    .link-icon img {
-      width: 18px; /* 缩小图标 */
-      height: 18px;
-      transition: transform 0.3s ease;
-      filter: invert(0);
-    }
-    
-    .dark-mode .link-icon img {
-      filter: invert(1);
-    }
-    
-    .link-card:hover .link-icon img {
-      transform: scale(1.2);
-    }
-    
-    .link-info h3 {
-      font-size: 0.95rem; /* 缩小标题字号 */
-      margin-bottom: 3px;
-      transition: color 0.3s ease;
-    }
-    
-    .link-card:hover .link-info h3 {
-      color: var(--hover-color);
-    }
-    
-    .link-info p {
-      font-size: 0.8rem; /* 缩小描述字号 */
-      color: var(--accent-color);
-      transition: all 0.3s ease;
-    }
-    
-    .link-card:hover .link-info p {
-      color: var(--text-color);
-      transform: translateX(5px);
-    }
-    
-    /* 联系部分 - 优化移动端布局 */
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px; /* 调整间距 */
-      animation: fadeIn 0.8s forwards 0.3s;
-      opacity: 0;
-    }
-    
-    .contact-links a {
-      display: flex;
-      align-items: center;
-      padding: 8px 12px; /* 调整内边距 */
-      border-radius: 20px;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      color: var(--text-color);
-      font-size: 0.9rem; /* 缩小字号 */
-    }
-    
-    .contact-links a::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: rgba(100, 100, 100, 0.1);
-      transition: width 0.5s ease;
-    }
-    
-    .contact-links a:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    .contact-links a:hover::after {
-      width: 100%;
-    }
-    
-    .contact-links span {
-      position: relative;
-      z-index: 1;
-    }
-    
-    .contact-links img {
-      width: 18px; /* 缩小图标 */
-      height: 18px;
-      margin-right: 8px;
-      transition: transform 0.3s ease;
-      filter: invert(0);
-    }
-    
-    .dark-mode .contact-links img {
-      filter: invert(1);
-    }
-    
-    .contact-links a:hover img {
-      transform: rotate(15deg) scale(1.2);
-    }
-    
-    /* 页脚 - 统一内边距 */
-    footer {
-      text-align: center;
-      padding: 15px 15px; /* 调整内边距 */
-      margin-top: 25px;
-      animation: fadeIn 0.8s forwards 0.6s;
-      opacity: 0;
-    }
-    
-    footer img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin-bottom: 8px; /* 调整间距 */
-      transition: all 0.5s ease;
-    }
-    
-    footer:hover img {
-      transform: rotate(360deg) scale(1.2);
-    }
-    
-    footer p {
-      font-size: 0.8rem; /* 缩小字号 */
-      color: var(--accent-color);
-      transition: all 0.3s ease;
-    }
-    
-    footer:hover p {
-      color: var(--text-color);
-      letter-spacing: 1px;
-    }
-    
-    /* 滚动动画触发类 */
-    .scroll-animate {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    
-    .scroll-animate.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* 响应式设计 - 核心修复：桌面端隐藏移动端主题按钮 */
-    @media (min-width: 600px) {
-      .links-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .profile {
-        flex-direction: row;
-        text-align: left;
-        align-items: center; /* 桌面端恢复横向对齐 */
-      }
-      
-      /* 桌面端隐藏移动端主题按钮，解决重复问题 */
-      #mobileThemeToggle {
-        display: none;
-      }
-      
-      /* 桌面端恢复标题字号 */
-      h1 {
-        font-size: 2rem;
-      }
-      
-      h2 {
-        font-size: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 600px) {
-      /* 移动端隐藏桌面端导航栏的主题按钮 */
-      #themeToggle {
-        display: none;
-      }
-      
-      .nav-links {
-        display: none;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-    }
-  </style>
 </head>
 
 <body>
-  <!-- 导航栏 -->
+  <!-- 顶部导航 -->
   <header>
-    <nav class="glass-dark">
-      <div class="logo">
-        <img src="./assets/img/logo.png" alt="网站Logo">
-        <span>hz64</span>
-      </div>
-      
-      <!-- 桌面端导航栏（含主题按钮） -->
-      <div class="nav-links">
-        <a href="#home">首页</a>
-        <a href="#about">关于</a>
-        <a href="#links">链接</a>
-        <a href="#contact">联系</a>
-        <button class="theme-toggle" id="themeToggle">🌙</button>
-      </div>
-      
-      <!-- 移动端控制区（含主题按钮，桌面端会隐藏） -->
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <button class="theme-toggle" id="mobileThemeToggle">🌙</button>
-        <button class="mobile-menu-btn" id="menuBtn">☰</button>
-      </div>
-    </nav>
-    
-    <div class="mobile-menu glass-dark" id="mobileMenu">
-      <a href="#home">首页</a>
-      <a href="#about">关于</a>
-      <a href="#links">链接</a>
-      <a href="#contact">联系</a>
-    </div>
+    <center>
+      <table width="100%" cellpadding="10">
+        <tr>
+          <td align="left">
+            <img src="./assets/img/logo.png" alt="网站Logo" width="32" height="32">
+            <strong>hz64</strong>
+          </td>
+          <td align="right">
+            <a href="#home">首页</a> |
+            <a href="#about">关于</a> |
+            <a href="#links">链接</a> |
+            <a href="#contact">联系</a>
+          </td>
+        </tr>
+      </table>
+    </center>
+    <hr>
   </header>
 
-  <div class="container">
-    <!-- 首页/个人信息部分 -->
-    <section id="home">
-      <div class="glass scroll-animate">
-        <div class="profile">
-          <img src="./assets/img/logo.png" alt="个人头像" class="profile-img">
-          <div class="profile-info">
-            <h1>你好，我是<span style="color: var(--hover-color);">hz64</span></h1>
-            <p>欢迎来到我的个人主页，这里有我的项目、博客和其他资源的链接。</p>
-            <div>
-              <a href="#links" class="btn">访问链接</a>
-              <a href="./zc/" class="btn">支持我</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- 主要内容区 - 左右布局 -->
+  <table width="100%" cellpadding="15" border="0">
+    <!-- 首页部分 -->
+    <tr id="home">
+      <td width="50%" valign="top">
+        <center>
+          <img src="./assets/img/logo.png" alt="个人头像" width="150" height="150">
+          <h1>你好，我是hz64</h1>
+        </center>
+      </td>
+      <td width="50%" valign="top">
+        <h3>欢迎访问我的个人主页</h3>
+        <p>这里集合了我的项目、博客和其他资源的链接，希望能为你提供有价值的内容。</p>
+        <p>
+          <a href="#links"><strong>→ 访问链接</strong></a><br>
+          <a href="./zc/"><strong>→ 支持我</strong></a>
+        </p>
+      </td>
+    </tr>
+  </table>
 
-    <!-- 关于部分 -->
-    <section id="about">
-      <div class="glass scroll-animate">
+  <hr>
+
+  <!-- 关于部分 -->
+  <table width="100%" cellpadding="15" border="0" id="about">
+    <tr>
+      <td width="50%" valign="top">
         <h2>关于我</h2>
-        <p>我是一名热爱技术的开发者，专注于Web开发和相关技术研究。喜欢分享自己的学习经验和项目成果，欢迎通过以下渠道与我交流。</p>
-        <p style="margin-top: 15px;">这个网站集合了我的主要网络足迹，包括GitHub项目、技术博客、资源分享站等，希望能为你提供有价值的内容。</p>
-      </div>
-    </section>
+        <p>我是一名热爱技术的开发者，专注于Web开发和相关技术研究。</p>
+        <p>喜欢分享自己的学习经验和项目成果，欢迎通过各种渠道与我交流。</p>
+      </td>
+      <td width="50%" valign="top">
+        <h3>我的技术方向</h3>
+        <ul>
+          <li>Web前端开发</li>
+          <li>开源项目贡献</li>
+          <li>技术文档编写</li>
+          <li>实用工具开发</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 
-    <!-- 链接部分 -->
-    <section id="links">
-      <div class="glass scroll-animate">
+  <hr>
+
+  <!-- 链接部分 -->
+  <table width="100%" cellpadding="15" border="0" id="links">
+    <tr>
+      <td width="50%" valign="top">
         <h2>常用链接</h2>
-        <div class="links-grid">
-          <!-- GitHub链接 -->
-          <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer" class="link-card glass-dark">
-            <div class="link-icon">
-              <img src="./assets/img/github.svg" alt="GitHub图标">
-            </div>
-            <div class="link-info">
-              <h3>GitHub</h3>
-              <p>我的开源项目和代码仓库</p>
-            </div>
-          </a>
-          
-          <!-- 博客链接 -->
-          <a href="https://blog.hz6.us.kg/" target="_blank" rel="noopener noreferrer" class="link-card glass-dark">
-            <div class="link-icon">
-              <span>✍️</span>
-            </div>
-            <div class="link-info">
-              <h3>技术博客</h3>
-              <p>分享技术文章和心得</p>
-            </div>
-          </a>
-          
-          <!-- 资源站链接 -->
-          <a href="./zy/" class="link-card glass-dark">
-            <div class="link-icon">
-              <span>📥</span>
-            </div>
-            <div class="link-info">
-              <h3>资源站</h3>
-              <p>各种实用资源分享</p>
-            </div>
-          </a>
-          
-          <!-- 支持我链接 -->
-          <a href="./zc/" class="link-card glass-dark">
-            <div class="link-icon">
-              <span>❤️</span>
-            </div>
-            <div class="link-info">
-              <h3>支持我</h3>
-              <p>如果你喜欢我的内容</p>
-            </div>
-          </a>
-          
-          <!-- 更多链接 -->
-          <a href="./gd.html" class="link-card glass-dark" style="grid-column: 1 / -1;">
-            <div class="link-icon">
-              <span>⋯</span>
-            </div>
-            <div class="link-info">
-              <h3>更多</h3>
-              <p>其他相关链接和资源</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
+        <ul>
+          <li>
+            <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer">
+              <strong>GitHub</strong>
+            </a>
+            <p>我的开源项目和代码仓库</p>
+          </li>
+          <br>
+          <li>
+            <a href="https://blog.hz6.us.kg/" target="_blank" rel="noopener noreferrer">
+              <strong>技术博客</strong>
+            </a>
+            <p>分享技术文章和心得</p>
+          </li>
+        </ul>
+      </td>
+      <td width="50%" valign="top">
+        <br><br> <!-- 垂直对齐调整 -->
+        <ul>
+          <li>
+            <a href="./zy/">
+              <strong>资源站</strong>
+            </a>
+            <p>各种实用资源分享</p>
+          </li>
+          <br>
+          <li>
+            <a href="./zc/">
+              <strong>支持我</strong>
+            </a>
+            <p>如果你喜欢我的内容</p>
+          </li>
+          <br>
+          <li>
+            <a href="./gd.html">
+              <strong>更多链接 →</strong>
+            </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table>
 
-    <!-- 联系部分 -->
-    <section id="contact">
-      <div class="glass scroll-animate">
+  <hr>
+
+  <!-- 联系部分 -->
+  <table width="100%" cellpadding="15" border="0" id="contact">
+    <tr>
+      <td width="50%" valign="top">
         <h2>联系我</h2>
-        <div class="contact-links">
-          <a href="mailto:example@example.com" class="glass-dark">
-            <img src="./assets/img/mail.svg" alt="邮箱图标">
-            <span>发送邮件</span>
+        <p>有任何问题或建议，欢迎通过以下方式联系我：</p>
+      </td>
+      <td width="50%" valign="top" align="center">
+        <p>
+          <a href="mailto:example@example.com"><strong>✉️ 发送邮件</strong></a><br><br>
+          <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer">
+            <strong>💻 GitHub留言</strong>
           </a>
-          
-          <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer" class="glass-dark">
-            <img src="./assets/img/github.svg" alt="GitHub图标">
-            <span>GitHub留言</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </div>
+        </p>
+      </td>
+    </tr>
+  </table>
+
+  <hr>
 
   <!-- 页脚 -->
-  <footer class="glass-dark">
-    <img src="./assets/img/logo.png" alt="网站Logo">
-    <p>Copyright © 2025 ZeAy. All Rights Reserved.</p>
+  <footer>
+    <center>
+      <img src="./assets/img/logo.png" alt="网站Logo" width="32" height="32">
+      <p>Copyright © 2025 ZeAy. All Rights Reserved.</p>
+    </center>
   </footer>
 
-  <!-- 页面脚本（未修改，功能保持一致） -->
+  <!-- 平滑滚动脚本 -->
   <script>
-    // 主题切换功能
-    const themeToggle = document.getElementById('themeToggle');
-    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-    const body = document.body;
-    
-    // 检查本地存储中的主题偏好
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-mode');
-      themeToggle.textContent = '☀️';
-      mobileThemeToggle.textContent = '☀️';
-    }
-    
-    // 切换主题
-    function toggleTheme() {
-      body.classList.toggle('dark-mode');
-      
-      if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark');
-        themeToggle.textContent = '☀️';
-        mobileThemeToggle.textContent = '☀️';
-      } else {
-        localStorage.setItem('theme', 'light');
-        themeToggle.textContent = '🌙';
-        mobileThemeToggle.textContent = '🌙';
-      }
-    }
-    
-    themeToggle.addEventListener('click', toggleTheme);
-    mobileThemeToggle.addEventListener('click', toggleTheme);
-    
-    // 移动端菜单切换动画
-    document.getElementById('menuBtn').addEventListener('click', function() {
-      const mobileMenu = document.getElementById('mobileMenu');
-      mobileMenu.classList.toggle('active');
-      
-      // 切换图标动画
-      const icon = this;
-      if (mobileMenu.classList.contains('active')) {
-        icon.style.transition = 'transform 0.5s ease';
-        icon.style.transform = 'rotate(90deg)';
-        setTimeout(() => {
-          icon.textContent = '✕';
-          icon.style.transform = 'rotate(180deg)';
-        }, 250);
-      } else {
-        icon.style.transition = 'transform 0.5s ease';
-        icon.style.transform = 'rotate(0)';
-        setTimeout(() => {
-          icon.textContent = '☰';
-        }, 250);
-      }
-    });
-    
-    // 点击导航链接后关闭移动菜单并添加平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
+        const targetElement = document.querySelector(this.getAttribute('href'));
         if (targetElement) {
-          // 平滑滚动到目标位置
           window.scrollTo({
-            top: targetElement.offsetTop - 70,
+            top: targetElement.offsetTop - 50,
             behavior: 'smooth'
           });
-          
-          // 关闭移动菜单
-          const mobileMenu = document.getElementById('mobileMenu');
-          if (mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            const menuBtn = document.getElementById('menuBtn');
-            menuBtn.textContent = '☰';
-            menuBtn.style.transform = 'rotate(0)';
-          }
         }
       });
     });
-    
-    // 滚动动画
-    function checkScroll() {
-      const elements = document.querySelectorAll('.scroll-animate');
-      elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add('visible');
-        }
-      });
-    }
-    
-    // 初始检查和滚动时检查
-    window.addEventListener('load', checkScroll);
-    window.addEventListener('scroll', checkScroll);
   </script>
 </body>
 </html>
