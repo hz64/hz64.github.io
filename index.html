@@ -5,6 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>hz64</title>
   <link rel="icon" href="./assets/img/logo.png" type="image/png">
+  <style>
+    /* 基础排版优化 */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 标题样式 */
+    h1, h2, h3, strong {
+      color: #333;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.7rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    /* 段落样式 */
+    p {
+      color: #555;
+      margin: 0 0 1rem 0;
+    }
+
+    /* 链接样式 */
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 列表样式 */
+    ul {
+      margin: 0.8rem 0 1.2rem 0;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* 表格布局优化 */
+    table {
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+
+    td {
+      padding: 15px;
+    }
+
+    /* 头部和底部样式 */
+    header, footer {
+      padding: 10px 0;
+    }
+
+    footer p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* 分隔线样式 */
+    hr {
+      border: 0;
+      border-top: 1px solid #eee;
+      margin: 1.5rem 0;
+    }
+
+    /* 响应式设计 - 手机适配 */
+    @media (max-width: 768px) {
+      /* 调整标题大小 */
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      h3 {
+        font-size: 1.3rem;
+      }
+      
+      /* 表格单元格在手机上改为块级显示 */
+      td {
+        display: block;
+        width: 100% !important;
+        padding: 10px 0;
+      }
+      
+      /* 导航链接间距调整 */
+      header a {
+        margin: 0 5px;
+      }
+      
+      /* 调整内边距 */
+      body {
+        padding: 0 10px;
+      }
+      
+      /* 头像大小调整 */
+      img[alt="个人头像"] {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -29,7 +154,7 @@
     <hr>
   </header>
 
-  <!-- 主要内容区 - 左右布局 -->
+  <!-- 主要内容区 - 响应式布局 -->
   <table width="100%" cellpadding="15" border="0">
     <!-- 首页部分 -->
     <tr id="home">
@@ -86,7 +211,6 @@
             </a>
             <p>我的开源项目和代码仓库</p>
           </li>
-          <br>
           <li>
             <a href="https://blog.hz6.us.kg/" target="_blank" rel="noopener noreferrer">
               <strong>技术博客</strong>
@@ -96,7 +220,6 @@
         </ul>
       </td>
       <td width="50%" valign="top">
-        <br><br> <!-- 垂直对齐调整 -->
         <ul>
           <li>
             <a href="./zy/">
@@ -104,14 +227,12 @@
             </a>
             <p>各种实用资源分享</p>
           </li>
-          <br>
           <li>
             <a href="./zc/">
               <strong>支持我</strong>
             </a>
             <p>如果你喜欢我的内容</p>
           </li>
-          <br>
           <li>
             <a href="./gd.html">
               <strong>更多链接 →</strong>
@@ -133,7 +254,7 @@
       </td>
       <td width="50%" valign="top" align="center">
         <p>
-          <a href="mailto:example@example.com"><strong>✉️ 发送邮件</strong></a><br><br>
+          <a href="mailto:xiaoze@hz6.us.kg"><strong>✉️ 发送邮件</strong></a><br><br>
           <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer">
             <strong>💻 GitHub留言</strong>
           </a>
