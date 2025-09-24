@@ -91,6 +91,21 @@
       margin: 1.5rem 0;
     }
 
+    /* 运行时间 & 在线人数 统一样式 */
+    .runtime {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    /* 错误提示样式 */
+    .error-message {
+      color: #dc3545;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+
     /* 响应式设计 - 手机适配 */
     @media (max-width: 768px) {
       /* 调整标题大小 */
@@ -268,6 +283,12 @@
     <center>
       <img src="./assets/img/logo.png" alt="网站Logo" width="32" height="32">
       <p>💖 Copyright © 2025 ZeAy. All Rights Reserved.</p>
+      <!-- 网站运行时间（带颜字符） -->
+      <p class="runtime">⏳ 网站已运行：<span id="runTime"></span></p>
+      <!-- 在线人数（带颜字符，新增，位于运行时间下方） -->
+      <p class="runtime">👥 当前在线：<span id="onlineUsers">0</span> 人</p>
+      <!-- 在线人数错误提示（新增） -->
+      <p class="error-message" id="onlineError"></p>
     </center>
   </footer>
 
@@ -285,6 +306,65 @@
         }
       });
     });
+  </script>
+
+  <!-- 网站运行时间计算脚本 -->
+  <script>
+    // 1. 修正起始时间（原25时为无效值，改为0时）
+    const startTime = new Date(2021, 0, 12, 0, 0, 0); // 正确格式：2021年1月12日 00:00:00
+
+    // 2. 计算并更新运行时间
+    function updateRunTime() {
+      const now = new Date();
+      const timeDiff = now - startTime; // 时间差（毫秒）
+
+      // 转换为天、时、分、秒
+      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+      // 填充到页面元素
+      document.getElementById('runTime').textContent = 
+        `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+    }
+
+    // 3. 初始加载时执行一次，之后每秒更新
+    updateRunTime();
+    setInterval(updateRunTime, 1000);
+  </script>
+
+  <!-- 在线人数更新脚本（新增，适配JSON接口） -->
+  <script>
+    // 替换为你的 online_count.php 实际路径（确保与HTML同目录或路径正确）
+    const ONLINE_COUNT_API = 'online_count.php';
+
+    // 获取并更新在线人数
+    function updateOnlineCount() {
+      fetch(ONLINE_COUNT_API)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`接口请求失败（${response.status}）`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const errorEl = document.getElementById('onlineError');
+          if (data.success) {
+            document.getElementById('onlineUsers').textContent = data.count;
+            errorEl.textContent = ''; // 清除错误提示
+          } else {
+            errorEl.textContent = `加载失败: ${data.error}`;
+          }
+        })
+        .catch(error => {
+          document.getElementById('onlineError').textContent = `加载失败: ${error.message}`;
+        });
+    }
+
+    // 初始加载+定时更新（30秒刷新一次，与运行时间风格统一）
+    updateOnlineCount();
+    setInterval(updateOnlineCount, 30000);
   </script>
 </body>
 </html>
