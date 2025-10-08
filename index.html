@@ -285,10 +285,6 @@
       <p>💖 Copyright © 2025 ZeAy. All Rights Reserved.</p>
       <!-- 网站运行时间（带颜字符） -->
       <p class="runtime">⏳ 网站已运行：<span id="runTime"></span></p>
-      <!-- 在线人数（带颜字符，位于运行时间下方） -->
-      <p class="runtime">👥 当前在线：<span id="onlineUsers">0</span> 人</p>
-      <!-- 在线人数错误提示 -->
-      <p class="error-message" id="onlineError"></p>
     </center>
   </footer>
 
@@ -332,39 +328,6 @@
     // 初始加载+每秒更新
     updateRunTime();
     setInterval(updateRunTime, 1000);
-  </script>
-
-  <!-- 在线人数更新脚本（适配 api.hz6.us.kg/zxyh/api.php 接口） -->
-  <script>
-    // 核心修改：替换为实际部署的接口完整URL
-    const ONLINE_COUNT_API = 'https://api.hz6.us.kg/zxyh/api.php';
-
-    // 获取并更新在线人数
-    function updateOnlineCount() {
-      fetch(ONLINE_COUNT_API)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`接口请求失败（${response.status}）`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          const errorEl = document.getElementById('onlineError');
-          if (data.success) {
-            document.getElementById('onlineUsers').textContent = data.count;
-            errorEl.textContent = ''; // 清除错误提示
-          } else {
-            errorEl.textContent = `加载失败: ${data.error}`;
-          }
-        })
-        .catch(error => {
-          document.getElementById('onlineError').textContent = `加载失败: ${error.message}`;
-        });
-    }
-
-    // 初始加载+30秒刷新一次
-    updateOnlineCount();
-    setInterval(updateOnlineCount, 30000);
   </script>
 </body>
 </html>
