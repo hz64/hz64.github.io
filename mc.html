@@ -4,7 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
-  <title>加入 Minecraft 服务器</title>
+  <title>Minecraft服务器 - 加入Xiaoze的世界 | ZeAy</title>
+  <meta name="description" content="Xiaoze的Minecraft服务器，支持Java版和Bedrock版，欢迎加入我们的游戏世界。">
+  <meta name="keywords" content="Minecraft,服务器,Java版,Bedrock版,游戏服务器">
+  <meta name="author" content="ZeAy">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="./assets/img/logo.png" type="image/png">
+  <!-- 结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Xiaoze Minecraft服务器",
+    "url": "https://hz64.github.io/mc.html",
+    "description": "Xiaoze的Minecraft服务器，支持Java版和Bedrock版，欢迎加入我们的游戏世界。",
+    "provider": {
+      "@type": "Person",
+      "name": "ZeAy",
+      "alternateName": "小泽"
+    }
+  }
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
@@ -133,7 +153,7 @@
       .then(res => res.json())
       .then(data => {
         if (!data.online) {
-          statusDiv.innerHTML = "服务器状态：<b style='color: red;'>离线（保护中正常运行）</b>";
+          statusDiv.innerHTML = "服务器状态：<b style='color: red;'>离线</b>";
         } else {
           statusDiv.innerHTML = `
             服务器状态：<b style='color: green;'>在线</b><br>

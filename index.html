@@ -4,350 +4,203 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZeAy</title>
+  <meta name="description" content="ZeAy的个人技术博客与资源分享平台，专注于Web开发、开源项目和技术分享，提供有价值的技术文章和实用资源。">
+  <meta name="keywords" content="ZeAy,技术博客,Web开发,开源项目,资源分享,开发者">
+  <meta name="author" content="ZeAy">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
   <link rel="icon" href="./assets/img/logo.png" type="image/png">
-  <style>
-    /* 基础排版优化 */
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0 15px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    /* 标题样式 */
-    h1, h2, h3, strong {
-      color: #333;
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
-    }
-
-    h2 {
-      font-size: 1.7rem;
-      margin-bottom: 0.7rem;
-    }
-
-    h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.6rem;
-    }
-
-    /* 段落样式 */
-    p {
-      color: #555;
-      margin: 0 0 1rem 0;
-    }
-
-    /* 链接样式 */
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* 列表样式 */
-    ul {
-      margin: 0.8rem 0 1.2rem 0;
-      padding-left: 1.5rem;
-    }
-
-    li {
-      margin-bottom: 0.5rem;
-    }
-
-    /* 表格布局优化 */
-    table {
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
-      width: 100%;
-    }
-
-    td {
-      padding: 15px;
-    }
-
-    /* 头部和底部样式 */
-    header, footer {
-      padding: 10px 0;
-    }
-
-    footer p {
-      color: #666;
-      font-size: 0.9rem;
-    }
-
-    /* 分隔线样式 */
-    hr {
-      border: 0;
-      border-top: 1px solid #eee;
-      margin: 1.5rem 0;
-    }
-
-    /* 运行时间 & 在线人数 统一样式 */
-    .runtime {
-      color: #666;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-
-    /* 错误提示样式 */
-    .error-message {
-      color: #dc3545;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    /* 响应式设计 - 手机适配 */
-    @media (max-width: 768px) {
-      /* 调整标题大小 */
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      h2 {
-        font-size: 1.5rem;
-      }
-      
-      h3 {
-        font-size: 1.3rem;
-      }
-      
-      /* 表格单元格在手机上改为块级显示 */
-      td {
-        display: block;
-        width: 100% !important;
-        padding: 10px 0;
-      }
-      
-      /* 导航链接间距调整 */
-      header a {
-        margin: 0 5px;
-      }
-      
-      /* 调整内边距 */
-      body {
-        padding: 0 10px;
-      }
-      
-      /* 头像大小调整 */
-      img[alt="个人头像"] {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
+  <!-- 结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://hz6.xx.kg/",
+    "@type": "Person",
+    "name": "ZeAy",
+    "alternateName": ["小泽", "hz64", "hz6"],
+    "url": "https://hz64.github.io/",
+    "sameAs": [
+      "https://github.com/hz64",
+      "https://blog.hz6.xx.kg/"
+    ],
+    "description": "ZeAy是一名专注于Web开发和技术创新的开发者，拥有多年的前端开发经验，熟悉HTML、CSS、JavaScript等核心Web技术，热衷于探索新兴技术和开源项目。",
+    "image": "./assets/img/logo.png",
+    "jobTitle": "Web开发者",
+    "knowsAbout": ["Web前端开发", "后端开发", "开源项目", "技术文档编写", "实用工具开发"]
+  }
+  </script>
+  <style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;margin:0;padding:0 15px;max-width:1200px;margin:0 auto}h1,h2,h3,strong{color:#333;margin-top:0}h1{font-size:2rem;margin-bottom:.8rem}h2{font-size:1.7rem;margin-bottom:.7rem}h3{font-size:1.4rem;margin-bottom:.6rem}p{color:#555;margin:0 0 1rem 0}a{color:#0066cc;text-decoration:none}a:hover{text-decoration:underline}ul{margin:.8rem 0 1.2rem 0;padding-left:1.5rem}li{margin-bottom:.5rem}header{padding:10px 0}.header-container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}.logo{display:flex;align-items:center;gap:8px}.main-nav ul{display:flex;list-style:none;margin:0;padding:0;gap:15px}.main-nav li{margin-bottom:0}main{margin:20px 0}.section{margin:20px 0}.section-content{display:flex;flex-wrap:wrap;gap:20px}.section-content>div{flex:1;min-width:300px;padding:15px}.avatar-container{text-align:center}.home-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}.links-list{list-style:none;padding:0;margin:0}.links-list li{margin-bottom:15px;padding:10px;background:#f9f9f9;border-radius:8px}footer{padding:10px 0;text-align:center}.footer-content{display:flex;flex-direction:column;align-items:center;gap:10px}.footer-logo{display:flex;align-items:center}footer p{color:#666;font-size:.9rem;margin:0}hr{border:0;border-top:1px solid #eee;margin:1.5rem 0}.runtime{color:#666;font-size:.9rem;margin-top:.5rem}.error-message{color:#dc3545;font-size:.8rem;margin-top:.3rem;margin-bottom:.5rem}@media(max-width:768px){h1{font-size:1.8rem}h2{font-size:1.5rem}h3{font-size:1.3rem}.header-container{flex-direction:column;gap:15px}.main-nav ul{flex-wrap:wrap;justify-content:center;gap:10px}body{padding:0 10px}img[alt="ZeAy个人头像"]{width:120px;height:120px}.section-content>div{min-width:100%;padding:10px 0}}</style>
 </head>
 
 <body>
   <!-- 顶部导航 -->
   <header>
-    <center>
-      <table width="100%" cellpadding="10">
-        <tr>
-          <td align="left">
-            <img src="./assets/img/logo.png" alt="网站Logo" width="32" height="32">
-            <strong>ZeAy</strong>
-          </td>
-          <td align="right">
-            <a href="#home">首页</a> |
-            <a href="#about">关于</a> |
-            <a href="#links">链接</a> |
-            <a href="#friend-links">友情链接</a> |
-            <a href="#contact">联系我</a>
-          </td>
-        </tr>
-      </table>
-    </center>
+    <div class="header-container">
+      <div class="logo">
+        <img src="./assets/img/logo.png" alt="ZeAy网站Logo" width="32" height="32">
+        <strong>ZeAy</strong>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#home">首页</a></li>
+          <li><a href="#about">关于</a></li>
+          <li><a href="#links">链接</a></li>
+          <li><a href="#friend-links">友情链接</a></li>
+          <li><a href="#contact">联系我</a></li>
+        </ul>
+      </nav>
+    </div>
     <hr>
   </header>
 
-  <!-- 主要内容区 - 响应式布局 -->
-  <table width="100%" cellpadding="15" border="0">
+  <!-- 主要内容区 -->
+  <main>
     <!-- 首页部分 -->
-    <tr id="home">
-      <td width="50%" valign="top">
-        <center>
-          <img src="./assets/img/logo.png" alt="个人头像" width="150" height="150">
-          <h1>你好，我是ZeAy ✧(◍˃̶ᗜ˂̶◍)✩</h1>
-        </center>
-      </td>
-      <td width="50%" valign="top">
-        <h3>欢迎访问我的个人主页</h3>
-        <p>这里集合了我的项目、博客和其他资源的链接，希望能为你提供有价值的内容～</p>
-        <p>
-          <a href="#links"><strong>→ 访问链接</strong></a><br>
-          <a href="./zc/"><strong>→ 支持我</strong></a>
-        </p>
-      </td>
-    </tr>
-  </table>
+    <section id="home" class="section">
+      <div class="section-content">
+        <div class="home-left">
+          <div class="avatar-container">
+            <img src="./assets/img/logo.png" alt="ZeAy个人头像" width="150" height="150">
+            <h1>你好，我是ZeAy ✧(◍˃̶ᗜ˂̶◍)✩</h1>
+          </div>
+        </div>
+        <div class="home-right">
+          <h3>欢迎访问我的个人主页</h3>
+          <p>这里集合了我的项目、博客和其他资源的链接，希望能为你提供有价值的内容～</p>
+          <div class="home-actions">
+            <a href="#links"><strong>→ 访问链接</strong></a>
+            <a href="./zc/"><strong>→ 支持我</strong></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- 关于部分 -->
-  <table width="100%" cellpadding="15" border="0" id="about">
-    <tr>
-      <td width="50%" valign="top">
-        <h2>关于我 (´･ω･`)</h2>
-        <p>我是一名热爱技术的开发者，专注于Web开发和相关技术研究～</p>
-        <p>喜欢分享自己的学习经验和项目成果，欢迎通过各种渠道与我交流</p>
-      </td>
-      <td width="50%" valign="top">
-        <h3>我的技术方向 ✦</h3>
-        <ul>
-          <li>✦ Web前端开发</li>
-          <li>✦ 开源项目贡献</li>
-          <li>✦ 技术文档编写</li>
-          <li>✦ 实用工具开发</li>
-          <li>✦ 搬运点好玩的</li>
-        </ul>
-      </td>
-    </tr>
-  </table>
+    <!-- 关于部分 -->
+    <section id="about" class="section">
+      <div class="section-content">
+        <div class="about-left">
+          <h2>关于我 (´･ω･`)</h2>
+          <p>我是ZeAy，一名专注于Web开发和技术创新的开发者。拥有多年的前端开发经验，熟悉HTML、CSS、JavaScript等核心Web技术，热衷于探索新兴技术和开源项目。</p>
+          <p>我喜欢将复杂的技术问题简化，通过编写清晰易懂的代码和文档来分享我的学习经验。我的目标是创建实用、高效且用户友好的Web应用，为技术社区贡献自己的力量。</p>
+          <p>欢迎通过各种渠道与我交流，共同探讨技术话题，分享开发经验。</p>
+        </div>
+        <div class="about-right">
+          <h3>我的技术栈 ✦</h3>
+          <ul>
+            <li>✦ Web前端开发：HTML5、CSS3、JavaScript、React、Vue.js</li>
+            <li>✦ 后端开发：Node.js、Express、MongoDB</li>
+            <li>✦ 开源项目贡献：GitHub活跃贡献者，参与多个开源项目开发</li>
+            <li>✦ 技术文档编写：专注于创建清晰、实用的技术教程和文档</li>
+            <li>✦ 实用工具开发：开发各种提高开发效率的工具和脚本</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- 链接部分 -->
-  <table width="100%" cellpadding="15" border="0" id="links">
-    <tr>
-      <td width="50%" valign="top">
-        <h2>常用链接 🔗</h2>
-        <ul>
-          <li>
-            <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer">
-              <strong>📦 GitHub</strong>
-            </a>
-            <p>我的开源项目和代码仓库 (≧∇≦)ﾉ</p>
-          </li>
-          <li>
-            <a href="https://blog.hz6.xx.kg/" target="_blank" rel="noopener noreferrer">
-              <strong>📝 技术博客</strong>
-            </a>
-            <p>分享技术文章和心得 (◍•ᴗ•◍)ﾉ</p>
-          </li>
-        </ul>
-      </td>
-      <td width="50%" valign="top">
-        <ul>
-          <li>
-            <a href="./zy/">
-              <strong>🎁 资源站</strong>
-            </a>
-            <p>各种实用资源分享 (^o^)~</p>
-          </li>
-          <li>
-            <a href="./zc/">
-              <strong>💖 支持我</strong>
-            </a>
-            <p>如果你喜欢我的内容 (´▽`ʃ♡ƪ)</p>
-          </li>
-          <li>
-            <a href="./gd.html">
-              <strong>更多链接 → </strong>
-            </a>
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </table>
+    <!-- 链接部分 -->
+    <section id="links" class="section">
+      <div class="section-content">
+        <div class="links-left">
+          <h2>常用链接 🔗</h2>
+          <ul class="links-list">
+            <li>
+              <a href="https://github.com/hz64" target="_blank" rel="noopener noreferrer">
+                <strong>📦 GitHub</strong>
+              </a>
+              <p>我的开源项目和代码仓库 (≧∇≦)ﾉ</p>
+            </li>
+            <li>
+              <a href="https://blog.hz6.xx.kg/" target="_blank" rel="noopener noreferrer">
+                <strong>📝 技术博客</strong>
+              </a>
+              <p>分享技术文章和心得 (◍•ᴗ•◍)ﾉ</p>
+            </li>
+          </ul>
+        </div>
+        <div class="links-right">
+          <ul class="links-list">
+            <li>
+              <a href="./zy/">
+                <strong>🎁 资源站</strong>
+              </a>
+              <p>各种实用资源分享 (^o^)~</p>
+            </li>
+            <li>
+              <a href="./zc/">
+                <strong>💖 支持我</strong>
+              </a>
+              <p>如果你喜欢我的内容 (´▽`ʃ♡ƪ)</p>
+            </li>
+            <li>
+              <a href="./gd.html">
+                <strong>更多链接 → </strong>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- 友情链接 -->
-  <table width="100%" cellpadding="15" border="0" id="friend-links">
-    <tr>
-      <td width="50%" valign="top">
-        <h2>友情链接 🌟</h2>
-        <ul>
-          <li>
-            <a href="http://shiyu.cc.cd/" target="_blank" rel="1">
-              <strong>👉shiyu.cc.cd</strong>
-            </a>
-            <p>时间科技工作室</p>
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </table>
+    <!-- 友情链接 -->
+    <section id="friend-links" class="section">
+      <div class="section-content">
+        <div class="friend-links-left">
+          <h2>友情链接 🌟</h2>
+          <ul class="links-list">
+            <li>
+              <a href="http://shiyu.cc.cd/" target="_blank" rel="noopener noreferrer">
+                <strong>👉shiyu.cc.cd</strong>
+              </a>
+              <p>时间科技工作室</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- 联系部分 -->
-  <table width="100%" cellpadding="15" border="0" id="contact">
-    <tr>
-      <td width="50%" valign="top">
-        <h2>联系我 ～(^з^)-☆</h2>
-        <p>有任何问题或建议，欢迎通过以下方式联系我呀：</p>
-      </td>
-      <td width="50%" valign="top" align="center">
-        <p>
-          <a href="mailto:admin@hz6.xx.kg"><strong>✉️ 发送邮件</strong></a><br><br>
-        </p>
-      </td>
-    </tr>
-  </table>
+    <!-- 联系部分 -->
+    <section id="contact" class="section">
+      <div class="section-content">
+        <div class="contact-left">
+          <h2>联系我 ～(^з^)-☆</h2>
+          <p>有任何问题或建议，欢迎通过以下方式联系我呀：</p>
+        </div>
+        <div class="contact-right">
+          <div class="contact-method">
+            <a href="mailto:admin@hz6.xx.kg"><strong>✉️ 发送邮件</strong></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <hr>
 
   <!-- 页脚 -->
   <footer>
-    <center>
-      <img src="./assets/img/logo.png" alt="网站Logo" width="32" height="32">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="./assets/img/logo.png" alt="ZeAy网站Logo" width="32" height="32">
+      </div>
       <p>💖 Copyright © 2025 ZeAy. All Rights Reserved.</p>
       <!-- 网站运行时间（带颜字符） -->
       <p class="runtime">⏳ 网站已运行：<span id="runTime"></span></p>
-    </center>
+    </div>
   </footer>
 
-  <!-- 平滑滚动脚本 -->
+  <!-- 合并并压缩后的脚本 -->
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetElement = document.querySelector(this.getAttribute('href'));
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.offsetTop - 50,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  </script>
-
-  <!-- 网站运行时间计算脚本 -->
-  <script>
-    // 网站起始运行时间：2021年1月12日 00:00:00
-    const startTime = new Date(2021, 0, 12, 0, 0, 0);
-
-    // 计算并更新运行时间
-    function updateRunTime() {
-      const now = new Date();
-      const timeDiff = now - startTime; // 时间差（毫秒）
-
-      // 转换为天、时、分、秒
-      const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-      // 填充到页面元素
-      document.getElementById('runTime').textContent = 
-        `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
-    }
-
-    // 初始加载+每秒更新
-    updateRunTime();
-    setInterval(updateRunTime, 1000);
+    // 平滑滚动脚本
+    document.querySelectorAll('a[href^="#"]').forEach(l=>{l.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));t&&window.scrollTo({top:t.offsetTop-50,behavior:'smooth'})})});
+    // 网站运行时间计算脚本
+    const s=new Date(2021,0,12,0,0,0);function u(){const e=new Date,t=e-s,d=Math.floor(t/(1e3*60*60*24)),h=Math.floor(t%(1e3*60*60*24)/(1e3*60*60)),m=Math.floor(t%(1e3*60*60)/(1e3*60)),n=Math.floor(t%(1e3*60)/1e3);document.getElementById('runTime').textContent=`${d}天 ${h}时 ${m}分 ${n}秒`}u(),setInterval(u,1e3);
   </script>
 </body>
 </html>
