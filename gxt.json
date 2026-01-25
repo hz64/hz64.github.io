@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "version_code": 1,
+  "min_supported_version": "1.0.0",
+  "min_supported_code": 1,
+  "download_url": "",
+  "download_url_android": "",
+  "download_url_ios": "",
+  "force_update": false,
+  "update_message": "发现新版本，请更新后继续使用",
+  "release_notes": "高新通 v1.0.0\n\n功能特性：\n- QQ号登录和注册\n- 查询功能\n- 积分系统\n- 公告显示\n- 头像显示\n- 管理员面板\n- 版本检查"
+}
