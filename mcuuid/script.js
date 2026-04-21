@@ -1,6 +1,23 @@
 // Minecraft UUID 查询工具
 // 使用 Mojang API 和第三方皮肤服务
 
+// 导入 3D 皮肤渲染库
+let skinview3d;
+
+// 动态导入皮肤渲染库
+async function loadSkinview3d() {
+    try {
+        skinview3d = await import('https://cdn.jsdelivr.net/npm/skinview3d@3.4.1/+esm');
+        console.log('3D 皮肤渲染库加载成功');
+    } catch (error) {
+        console.warn('3D 皮肤渲染库加载失败:', error);
+        skinview3d = null;
+    }
+}
+
+// 页面加载时尝试加载库
+window.addEventListener('load', loadSkinview3d);
+
 class MCUUIDQuery {
     constructor() {
         this.elements = {
@@ -60,8 +77,8 @@ class MCUUIDQuery {
         });
 
         // 查看全身
-        this.elements.viewBody.addEventListener('click', () => {
-            this.showBodyModal();
+        this.elements.viewBody.addEventListener('click', async () => {
+            await this.showBodyModal();
         });
 
         // 关闭模态框
@@ -150,15 +167,13 @@ class MCUUIDQuery {
         } catch (error) {
             let errorMessage = error.message || '查询失败，请稍后重试';
             
-            // 检测 CORS/网络错误
+            // 检测网络错误
             if (error.message === 'Failed to fetch') {
-                errorMessage = '无法连接到 API 服务器。这可能是以下原因导致的：\n\n' +
-                    '1. 直接打开了本地文件（file://）\n' +
-                    '2. 浏览器安全策略阻止了跨域请求\n\n' +
-                    '解决方法：\n' +
-                    '• 使用本地服务器运行（推荐）\n' +
-                    '• VS Code 安装 Live Server 插件\n' +
-                    '• 或使用命令: npx serve 或 python -m http.server';
+                errorMessage = '网络连接失败\n\n' +
+                    '可能原因：\n' +
+                    '• 网络连接不稳定\n' +
+                    '• CORS 代理服务暂时不可用\n\n' +
+                    '请检查网络连接后重试';
             }
             
             this.showError(errorMessage);
@@ -188,29 +203,27 @@ class MCUUIDQuery {
 
     // 通过用户名查询
     async queryByUsername(username) {
-        // 使用 Mojang API
-        const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(username)}`);
-        
-        if (response.status === 204) {
-            throw new Error('未找到该用户，可能不是正版账号');
-        }
+        // 使用 ashcon.app API（免费、支持 CORS、无限使用）
+        const response = await fetch(
+            `https://api.ashcon.app/mojang/v2/user/${encodeURIComponent(username)}`
+        );
         
         if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('未找到该用户，可能不是正版账号');
+            }
             throw new Error('查询失败，请稍后重试');
         }
-
-        const data = await response.json();
         
-        // 获取更多信息
-        const profile = await this.getProfile(data.id);
-        const nameHistory = await this.getNameHistory(data.id);
-
+        const profile = await response.json();
+        
+        // 转换为统一格式
         return {
-            name: data.name,
-            uuid: this.formatUUID(data.id),
-            uuidNoDashes: data.id.toLowerCase(),
+            name: profile.username,
+            uuid: profile.uuid,
+            uuidNoDashes: profile.uuid.replace(/-/g, ''),
             profile: profile,
-            nameHistory: nameHistory
+            nameHistory: profile.username_history || []
         };
     }
 
@@ -219,78 +232,44 @@ class MCUUIDQuery {
         const formattedUUID = this.formatUUID(uuid);
         const cleanUUID = this.unformatUUID(uuid);
 
-        // 使用 Mojang API 获取用户名历史
-        const response = await fetch(`https://api.mojang.com/user/profiles/${cleanUUID}/names`);
-        
-        if (response.status === 204) {
-            throw new Error('未找到该 UUID');
-        }
+        // ashcon.app 支持 UUID 查询
+        const response = await fetch(
+            `https://api.ashcon.app/mojang/v2/user/${cleanUUID}`
+        );
         
         if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('未找到该 UUID');
+            }
             throw new Error('查询失败，请稍后重试');
         }
-
-        const nameHistory = await response.json();
-        const currentName = nameHistory[nameHistory.length - 1].name;
-
-        // 获取更多信息
-        const profile = await this.getProfile(cleanUUID);
-
+        
+        const profile = await response.json();
+        
         return {
-            name: currentName,
+            name: profile.username,
             uuid: formattedUUID,
             uuidNoDashes: cleanUUID,
             profile: profile,
-            nameHistory: nameHistory
+            nameHistory: profile.username_history || []
         };
-    }
-
-    // 获取详细资料
-    async getProfile(uuid) {
-        try {
-            const response = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${uuid}`);
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (e) {
-            console.warn('获取详细资料失败:', e);
-        }
-        return null;
-    }
-
-    // 获取用户名历史
-    async getNameHistory(uuid) {
-        try {
-            const response = await fetch(`https://api.mojang.com/user/profiles/${uuid}/names`);
-            if (response.ok) {
-                const data = await response.json();
-                return data.map((item, index) => ({
-                    name: item.name,
-                    changedAt: item.changedToAt,
-                    isCurrent: index === data.length - 1
-                }));
-            }
-        } catch (e) {
-            console.warn('获取用户名历史失败:', e);
-        }
-        return [];
     }
 
     // 显示结果
     displayResult(data) {
-        // 头像
-        this.elements.avatarImg.src = `https://crafatar.com/avatars/${data.uuidNoDashes}?size=120&overlay`;
+        // 头像 - 使用 mc-heads.net 的人脸渲染（helm 包含头盔层）
+        this.elements.avatarImg.src = `https://www.mc-heads.net/avatar/${data.uuidNoDashes}`;
+        
+        // 皮肤预览 - 使用 mc-heads.net 的全身渲染
+        this.elements.skinImg.src = `https://www.mc-heads.net/player/${data.uuidNoDashes}`;
+        
+        // 下载皮肤链接 - 使用 mc-heads.net
+        this.elements.downloadSkin.href = `https://www.mc-heads.net/download/${data.uuidNoDashes}`;
         
         // 基本信息
         this.elements.username.textContent = data.name;
         this.elements.uuid.textContent = data.uuid;
         this.elements.uuidNoDashes.textContent = data.uuidNoDashes;
-
-        // 皮肤预览
-        this.elements.skinImg.src = `https://crafatar.com/renders/body/${data.uuidNoDashes}?scale=8&overlay`;
-        
-        // 下载皮肤链接
-        this.elements.downloadSkin.href = `https://crafatar.com/skins/${data.uuidNoDashes}`;
 
         // 用户名历史
         this.displayNameHistory(data.nameHistory);
@@ -308,17 +287,24 @@ class MCUUIDQuery {
             return;
         }
 
+        // ashcon API 返回的格式: [{username: "name"}, ...]
         // 倒序显示，当前用户名在最上面
-        [...history].reverse().forEach((item, index) => {
+        const reversedHistory = [...history].reverse();
+        
+        reversedHistory.forEach((item, index) => {
             const div = document.createElement('div');
-            div.className = `name-history-item ${item.isCurrent ? 'current' : ''}`;
+            const isCurrent = index === 0; // 倒序后第一个是当前的
+            div.className = `name-history-item ${isCurrent ? 'current' : ''}`;
             
-            const dateStr = item.changedAt 
-                ? this.formatDate(item.changedAt)
-                : '原始用户名';
+            // ashcon API 不返回 changedAt，只显示用户名
+            const dateStr = index === history.length - 1 
+                ? '原始用户名' 
+                : '';
+
+            const username = item.username || item.name || 'Unknown';
 
             div.innerHTML = `
-                <span class="name">${this.escapeHtml(item.name)}</span>
+                <span class="name">${this.escapeHtml(username)}</span>
                 <span class="date">${dateStr}</span>
             `;
             
@@ -345,18 +331,89 @@ class MCUUIDQuery {
         return div.innerHTML;
     }
 
-    // 显示全身预览
-    showBodyModal() {
+    // 显示 3D 皮肤预览
+    async showBodyModal() {
         if (!this.currentData) return;
-        this.elements.bodyImg.src = `https://crafatar.com/renders/body/${this.currentData.uuidNoDashes}?scale=10&overlay`;
+        
+        // 显示模态框
         this.elements.bodyModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        
+        // 初始化 3D 渲染器
+        const container = document.getElementById('skin3dContainer');
+        container.innerHTML = '';
+        
+        // 确保皮肤渲染库已加载
+        if (!skinview3d) {
+            await loadSkinview3d();
+        }
+        
+        if (skinview3d) {
+            // 使用 3D 渲染
+            try {
+                // 清理之前的实例
+                if (this.skin3dInstance) {
+                    this.skin3dInstance.dispose();
+                    this.skin3dInstance = null;
+                }
+                
+                // 创建 skinview3d 实例
+                const skinViewer = new skinview3d.SkinViewer({
+                    domElement: container,
+                    width: 400,
+                    height: 400,
+                    skinUrl: `https://www.mc-heads.net/download/${this.currentData.uuidNoDashes}`
+                });
+                
+                // 添加动画
+                const waveAnimation = skinview3d.WaveAnimation;
+                skinViewer.animation = new waveAnimation();
+                
+                // 添加控制
+                const control = new skinview3d.OrbitControls(skinViewer);
+                control.enableRotate = true;
+                control.enableZoom = true;
+                control.enablePan = false;
+                
+                // 保存实例以便清理
+                this.skin3dInstance = skinViewer;
+                
+                console.log('3D 皮肤预览创建成功');
+            } catch (error) {
+                console.error('3D 渲染失败:', error);
+                // 回退到 2D 预览
+                this.show2DBodyPreview();
+            }
+        } else {
+            // 回退到 2D 预览
+            this.show2DBodyPreview();
+        }
     }
 
-    // 隐藏全身预览
+    // 2D 皮肤预览（备用）
+    show2DBodyPreview() {
+        if (!this.currentData) return;
+        
+        const container = document.getElementById('skin3dContainer');
+        container.innerHTML = `
+            <img 
+                src="https://www.mc-heads.net/player/${this.currentData.uuidNoDashes}/600" 
+                alt="2D 皮肤预览"
+                style="width: 100%; height: 100%; object-fit: contain;"
+            >
+        `;
+    }
+
+    // 隐藏 3D 皮肤预览
     hideBodyModal() {
         this.elements.bodyModal.classList.add('hidden');
         document.body.style.overflow = '';
+        
+        // 清理 3D 渲染器
+        if (this.skin3dInstance) {
+            this.skin3dInstance.dispose();
+            this.skin3dInstance = null;
+        }
     }
 
     // 复制到剪贴板
@@ -459,3 +516,25 @@ window.addEventListener('popstate', () => {
         location.reload();
     }
 });
+
+/*
+API 列表：
+
+1. Minecraft 账号查询 API:
+   - https://api.ashcon.app/mojang/v2/user/{username} - 通过用户名查询
+   - https://api.ashcon.app/mojang/v2/user/{uuid} - 通过 UUID 查询
+
+2. 皮肤服务 API:
+   - https://www.mc-heads.net/avatar/{uuid} - 头像（人脸）
+   - https://www.mc-heads.net/player/{uuid} - 全身皮肤预览
+   - https://www.mc-heads.net/player/{uuid}/600 - 全身皮肤预览（大图）
+   - https://www.mc-heads.net/download/{uuid} - 下载皮肤文件
+
+3. 3D 皮肤渲染库:
+   - https://cdn.jsdelivr.net/npm/skinview3d@3.4.1/+esm - skinview3d 库
+
+4. 浏览器 API:
+   - Clipboard API - 复制到剪贴板
+   - History API - 更新 URL 参数
+   - DOM API - 操作页面元素
+*/

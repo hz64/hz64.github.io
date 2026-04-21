@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft 正版账号查询 | 小泽查询</title>
+    <meta name="description" content="Minecraft 正版账号查询工具，支持通过用户名或 UUID 查询账号信息、皮肤预览、3D 模型预览等功能">
+    <meta name="keywords" content="Minecraft, 正版账号查询, UUID 查询, 皮肤查询, Minecraft 皮肤, 小泽查询">
+    <meta name="author" content="小泽查询">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#333333">
+    <link rel="canonical" href="https://hz6.xx.kg/">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='8' height='8' fill='%235D8C3A'/%3E%3Crect x='14' y='2' width='8' height='8' fill='%235D8C3A'/%3E%3Crect x='2' y='14' width='8' height='8' fill='%235D8C3A'/%3E%3Crect x='14' y='14' width='8' height='8' fill='%235D8C3A'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%238BC34A'/%3E%3Crect x='16' y='4' width='4' height='4' fill='%238BC34A'/%3E%3Crect x='4' y='16' width='4' height='4' fill='%238BC34A'/%3E%3Crect x='16' y='16' width='4' height='4' fill='%238BC34A'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,20 +174,23 @@
         </main>
 
         <footer class="footer">
-            <p>小泽查询 | 数据来源: Mojang API | 本工具仅供学习交流使用</p>
+            <p>小泽查询 | 数据来源: ashcon.app API, mc-heads.net | 本工具仅供学习交流使用</p>
             <p class="footer-links">
                 <a href="https://hz6.xx.kg/" target="_blank">访问小泽主页</a>
+            </p>
+            <p class="api-list">
+                <small>使用的 API: ashcon.app, mc-heads.net, skinview3d</small>
             </p>
         </footer>
     </div>
 
-    <!-- 全身预览模态框 -->
+    <!-- 3D 皮肤预览模态框 -->
     <div id="bodyModal" class="modal hidden">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
-            <h3>全身预览</h3>
+            <h3>3D 皮肤预览</h3>
             <div class="body-preview">
-                <img id="bodyImg" src="" alt="全身预览">
+                <div id="skin3dContainer" style="width: 400px; height: 400px; margin: 0 auto;"></div>
             </div>
         </div>
     </div>
@@ -190,6 +200,8 @@
         <span id="toastMessage"></span>
     </div>
 
+    <!-- 3D 皮肤渲染库 -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/skin3d@1.0.0-beta.8/dist/skin3d.esm.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

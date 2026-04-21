@@ -677,6 +677,16 @@ body {
     text-decoration: underline;
 }
 
+.api-list {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.api-list small {
+    opacity: 0.8;
+}
+
 /* 响应式设计 */
 @media (max-width: 640px) {
     .container {
@@ -710,29 +720,70 @@ body {
     }
 
     .result-card {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        gap: 16px;
+    }
+
+    .avatar-wrapper {
+        width: 80px;
+        height: 80px;
+        flex-shrink: 0;
+    }
+
+    .info-section {
+        flex: 1;
+    }
+
+    .info-item {
+        margin-bottom: 12px;
     }
 
     .info-value-wrapper {
-        justify-content: center;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
     }
 
     .info-value.uuid {
         font-size: 0.75rem;
+        flex: 1;
     }
 
-    .avatar-wrapper {
-        width: 100px;
-        height: 100px;
+    .copy-btn {
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+
+    .skin-section {
+        margin-top: 16px;
+    }
+
+    .skin-preview {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .skin-actions {
+        flex: 1;
     }
 
     .name-history-item {
-        flex-direction: column;
-        gap: 4px;
-        text-align: center;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        text-align: left;
+    }
+
+    .name-history-item .name {
+        flex: 1;
+    }
+
+    .name-history-item .date {
+        flex-shrink: 0;
     }
 }
 
@@ -754,6 +805,28 @@ body {
 
     .action-btn {
         justify-content: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .result-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .info-value-wrapper {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .skin-preview {
+        flex-direction: column;
+    }
+
+    .name-history-item {
+        flex-direction: column;
+        text-align: center;
     }
 }
 
