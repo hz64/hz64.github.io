@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft 正版账号查询 | 小泽查询</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="8" height="8" fill="#5D8C3A"/>
+                    <rect x="14" y="2" width="8" height="8" fill="#5D8C3A"/>
+                    <rect x="2" y="14" width="8" height="8" fill="#5D8C3A"/>
+                    <rect x="14" y="14" width="8" height="8" fill="#5D8C3A"/>
+                    <rect x="4" y="4" width="4" height="4" fill="#8BC34A"/>
+                    <rect x="16" y="4" width="4" height="4" fill="#8BC34A"/>
+                    <rect x="4" y="16" width="4" height="4" fill="#8BC34A"/>
+                    <rect x="16" y="16" width="4" height="4" fill="#8BC34A"/>
+                </svg>
+                <h1>Minecraft 正版账号查询</h1>
+            </div>
+            <p class="subtitle">小泽查询</p>
+        </header>
+
+        <main class="main-content">
+            <div class="search-box">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="usernameInput" 
+                        placeholder="输入 Minecraft 用户名或 UUID..."
+                        autocomplete="off"
+                    >
+                    <button id="searchBtn" class="search-btn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        查询
+                    </button>
+                </div>
+                <div class="search-options">
+                    <label class="radio-label">
+                        <input type="radio" name="searchType" value="username" checked>
+                        <span>用户名</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="searchType" value="uuid">
+                        <span>UUID</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>查询中...</p>
+            </div>
+
+            <div id="error" class="error hidden">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                </svg>
+                <p id="errorMessage"></p>
+            </div>
+
+            <div id="result" class="result hidden">
+                <div class="result-card">
+                    <div class="avatar-section">
+                        <div class="avatar-wrapper">
+                            <img id="avatarImg" src="" alt="玩家头像" loading="lazy">
+                            <div class="avatar-overlay">
+                                <button id="downloadAvatar" class="icon-btn" title="下载头像">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 17L2.621 19.485C2.843 20.376 3.643 21 4.561 21H19.439C20.357 21 21.157 20.376 21.379 19.485L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="avatar-actions">
+                            <button id="viewBody" class="action-btn secondary">查看全身</button>
+                        </div>
+                    </div>
+                    
+                    <div class="info-section">
+                        <div class="info-item">
+                            <span class="info-label">用户名</span>
+                            <div class="info-value-wrapper">
+                                <span id="username" class="info-value"></span>
+                                <button class="copy-btn" data-target="username" title="复制">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-label">UUID</span>
+                            <div class="info-value-wrapper">
+                                <span id="uuid" class="info-value uuid"></span>
+                                <button class="copy-btn" data-target="uuid" title="复制">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <span class="info-label">无符号 UUID</span>
+                            <div class="info-value-wrapper">
+                                <span id="uuidNoDashes" class="info-value uuid"></span>
+                                <button class="copy-btn" data-target="uuidNoDashes" title="复制">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+                                        <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-label">账号类型</span>
+                            <span id="accountType" class="info-value">
+                                <span class="badge premium">正版账号</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skin-section">
+                    <h3>皮肤预览</h3>
+                    <div class="skin-viewer">
+                        <div class="skin-view-wrapper">
+                            <img id="skinImg" src="" alt="皮肤预览" loading="lazy">
+                        </div>
+                        <div class="skin-actions">
+                            <a id="downloadSkin" href="#" target="_blank" class="action-btn primary">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 15V3M12 15L8 11M12 15L16 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 17L2.621 19.485C2.843 20.376 3.643 21 4.561 21H19.439C20.357 21 21.157 20.376 21.379 19.485L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                下载皮肤
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="name-history-section">
+                    <h3>用户名历史</h3>
+                    <div id="nameHistory" class="name-history-list">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>小泽查询 | 数据来源: Mojang API | 本工具仅供学习交流使用</p>
+            <p class="footer-links">
+                <a href="https://hz6.xx.kg/" target="_blank">访问小泽主页</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- 全身预览模态框 -->
+    <div id="bodyModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>全身预览</h3>
+            <div class="body-preview">
+                <img id="bodyImg" src="" alt="全身预览">
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div id="toast" class="toast hidden">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
