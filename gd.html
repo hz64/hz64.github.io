@@ -18,7 +18,9 @@
     --text-light:#8492a6;
     --radius:16px;
     --shadow:0 8px 20px -6px rgba(94,114,228,.25);
+    --shadow-hover:0 16px 40px -8px rgba(94,114,228,.35);
     --trans:.3s cubic-bezier(.4,0,.2,1);
+    --trans-fast:.2s cubic-bezier(.4,0,.2,1);
   }
   *{box-sizing:border-box;}
   body{
@@ -30,63 +32,136 @@
   }
   h2{
     text-align:center;
-    font-size:2rem;
-    font-weight:600;
-    margin:60px 0 10px;
-    letter-spacing:1px;
+    font-size:clamp(1.5rem, 5vw, 2.2rem);
+    font-weight:700;
+    margin:40px 0 8px;
+    letter-spacing:.5px;
+    background:linear-gradient(135deg, var(--primary), #6c7dd4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    animation:fadeInDown .5s ease-out;
   }
   .sub{
     text-align:center;
-    font-size:.9rem;
+    font-size:clamp(.85rem, 3vw, .95rem);
     color:var(--text-light);
-    margin-bottom:40px;
+    margin-bottom:32px;
+    animation:fadeInDown .5s ease-out .1s both;
   }
   .container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:24px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
     max-width:1100px;
-    margin:0 auto 60px;
-    padding:0 16px;
+    margin:0 auto 48px;
+    padding:0 12px;
   }
   .section{
     background:var(--card);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    padding:24px;
+    padding:20px;
     transition:transform var(--trans),box-shadow var(--trans);
+    animation:fadeInUp .5s ease-out backwards;
+    border:1px solid rgba(94,114,228,.08);
   }
+  .section:nth-child(1){animation-delay:.1s;}
+  .section:nth-child(2){animation-delay:.15s;}
+  .section:nth-child(3){animation-delay:.2s;}
+  .section:nth-child(4){animation-delay:.25s;}
+  .section:nth-child(5){animation-delay:.3s;}
+  .section:nth-child(6){animation-delay:.35s;}
   .section:hover{
-    transform:translateY(-4px);
-    box-shadow:0 12px 30px -6px rgba(94,114,228,.35);
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:var(--shadow-hover);
   }
   .section h3{
-    font-size:1.1rem;
-    margin:0 0 16px;
+    font-size:clamp(1rem, 4vw, 1.15rem);
+    margin:0 0 14px;
     display:flex;
     align-items:center;
     gap:8px;
+    color:var(--primary);
+    font-weight:600;
+    padding-bottom:10px;
+    border-bottom:1px solid rgba(94,114,228,.1);
   }
   .section a{
     display:flex;
     align-items:center;
-    gap:6px;
-    padding:6px 0;
-    font-size:.95rem;
+    gap:8px;
+    padding:8px 10px;
+    font-size:clamp(.85rem, 3vw, .95rem);
     color:var(--text);
     text-decoration:none;
-    border-radius:6px;
-    transition:background var(--trans),color var(--trans);
+    border-radius:8px;
+    transition:all var(--trans-fast);
+    margin:-4px 0;
   }
   .section a:hover{
-    background:rgba(94,114,228,.08);
+    background:linear-gradient(135deg, rgba(94,114,228,.08), rgba(94,114,228,.12));
     color:var(--primary);
+    transform:translateX(4px);
+    padding-left:14px;
+  }
+  .section a::before{
+    content:"→";
+    opacity:0;
+    transform:translateX(-6px);
+    transition:all var(--trans-fast);
+    font-size:.8rem;
+    color:var(--primary);
+  }
+  .section a:hover::before{
+    opacity:1;
+    transform:translateX(0);
   }
   footer{
     text-align:center;
     font-size:.8rem;
     color:var(--text-light);
-    padding:24px 10px;
+    padding:20px 10px;
+    animation:fadeIn .5s ease-out .4s both;
+  }
+  @keyframes fadeInDown{
+    from{
+      opacity:0;
+      transform:translateY(-20px);
+    }
+    to{
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+  @keyframes fadeInUp{
+    from{
+      opacity:0;
+      transform:translateY(20px);
+    }
+    to{
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+  @keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+  @media(max-width:480px){
+    .container{
+      gap:16px;
+      padding:0 10px;
+    }
+    .section{
+      padding:16px;
+    }
+    h2{
+      margin:30px 0 6px;
+    }
+    .sub{
+      margin-bottom:24px;
+    }
   }
   </style>
 </head>
