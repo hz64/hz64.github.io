@@ -28,7 +28,14 @@
     "knowsAbout": ["Python基础", "Java入门", "HTML/CSS", "PHP初学", "MySQL数据库"]
   }
   </script>
-  <style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;margin:0;padding:0 15px;max-width:1200px;margin:0 auto}h1,h2,h3,strong{color:#333;margin-top:0}h1{font-size:2rem;margin-bottom:.8rem}h2{font-size:1.7rem;margin-bottom:.7rem}h3{font-size:1.4rem;margin-bottom:.6rem}p{color:#555;margin:0 0 1rem 0}a{color:#0066cc;text-decoration:none}a:hover{text-decoration:underline}ul{margin:.8rem 0 1.2rem 0;padding-left:1.5rem}li{margin-bottom:.5rem}header{position:fixed;top:0;left:0;right:0;padding:10px 0;background:#fff;border-bottom:1px solid #eee;z-index:100;transition:transform 0.3s ease,box-shadow 0.3s ease}.header-container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}.logo{display:flex;align-items:center;gap:8px}.main-nav ul{display:flex;list-style:none;margin:0;padding:0;gap:15px}.main-nav li{margin-bottom:0}header.scrolled{box-shadow:0 2px 10px rgba(0,0,0,0.1)}main{margin:20px 0;padding-top:80px}.section{margin:20px 0}.section-content{display:flex;flex-wrap:wrap;gap:20px}.section-content>div{flex:1;min-width:300px;padding:15px}.avatar-container{text-align:center}.home-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}.links-list{list-style:none;padding:0;margin:0}.links-list li{margin-bottom:15px;padding:10px;background:#f9f9f9;border-radius:8px}footer{padding:10px 0;text-align:center}.footer-content{display:flex;flex-direction:column;align-items:center;gap:10px}.footer-logo{display:flex;align-items:center}footer p{color:#666;font-size:.9rem;margin:0}hr{border:0;border-top:1px solid #eee;margin:1.5rem 0}.runtime{color:#666;font-size:.9rem;margin-top:.5rem}.error-message{color:#dc3545;font-size:.8rem;margin-top:.3rem;margin-bottom:.5rem}.cursor{animation:blink 0.8s infinite}.typing-text{min-height:1.6rem;transition:text-shadow 0.1s ease;white-space:pre}.typing-line{margin-top:0.5rem;font-size:1.7rem}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@media(max-width:768px){h1{font-size:1.8rem}h2{font-size:1.5rem}h3{font-size:1.3rem}.header-container{flex-direction:column;gap:15px}.main-nav ul{flex-wrap:wrap;justify-content:center;gap:10px}body{padding:0 10px}img[alt="小泽个人头像"]{width:120px;height:120px}.section-content>div{min-width:100%;padding:10px 0}}</style>
+  <style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;margin:0;padding:0 15px;max-width:1200px;margin:0 auto}h1,h2,h3,strong{color:#333;margin-top:0}h1{font-size:2rem;margin-bottom:.8rem}h2{font-size:1.7rem;margin-bottom:.7rem}h3{font-size:1.4rem;margin-bottom:.6rem}p{color:#555;margin:0 0 1rem 0}a{color:#0066cc;text-decoration:none}a:hover{text-decoration:underline}ul{margin:.8rem 0 1.2rem 0;padding-left:1.5rem}li{margin-bottom:.5rem}header{position:fixed;top:0;left:0;right:0;padding:10px 15px;background:#fff;border-bottom:1px solid #eee;z-index:100;transition:transform 0.3s ease,box-shadow 0.3s ease}.header-container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}.logo{display:flex;align-items:center;gap:8px}.main-nav ul{display:flex;list-style:none;margin:0;padding:8px 12px;gap:15px;border:1px solid #ddd;border-radius:8px;flex-wrap:wrap}.main-nav li{margin-bottom:0}header.scrolled{box-shadow:0 2px 10px rgba(0,0,0,0.1)}main{margin:20px 0;padding-top:80px}.section{margin:20px 0}.section-content{display:flex;flex-wrap:wrap;gap:20px}.section-content>div{flex:1;min-width:300px;padding:15px}.avatar-container{text-align:center}.home-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}.links-list{list-style:none;padding:0;margin:0}.links-list li{margin-bottom:15px;padding:10px;background:#f9f9f9;border-radius:8px}footer{padding:10px 0;text-align:center}.footer-content{display:flex;flex-direction:column;align-items:center;gap:10px}.footer-logo{display:flex;align-items:center}footer p{color:#666;font-size:.9rem;margin:0}hr{border:0;border-top:1px solid #eee;margin:1.5rem 0}.runtime{color:#666;font-size:.9rem;margin-top:.5rem}.error-message{color:#dc3545;font-size:.8rem;margin-top:.3rem;margin-bottom:.5rem}.cursor{animation:blink 0.8s infinite}.typing-text{min-height:1.6rem;transition:text-shadow 0.1s ease;white-space:pre}.typing-line{margin-top:0.5rem;font-size:1.7rem}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}img{opacity:0;transition:opacity .4s ease,transform .3s ease}img.loaded{opacity:1}img:not(.loaded){background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:loading 1.4s infinite}@keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+/* section 淡入动画 */
+.section{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}.section.visible{opacity:1;transform:translateY(0)}
+/* 链接卡片悬停效果 */
+.links-list li{transition:transform .2s ease,box-shadow .2s ease}.links-list li:hover{transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+/* 返回顶部按钮 */
+.back-to-top{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:#fff;color:#333;border:3px solid #ddd;border-radius:8px;cursor:pointer;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease,transform .3s ease,box-shadow .3s ease;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:99}.back-to-top.show{opacity:1;visibility:visible}.back-to-top:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+@media(max-width:768px){h1{font-size:1.8rem}h2{font-size:1.5rem}h3{font-size:1.3rem}.header-container{flex-direction:column;gap:15px}.main-nav ul{flex-wrap:wrap;justify-content:center;gap:10px}body{padding:0 10px}img[alt="小泽个人头像"]{width:120px;height:120px}.typing-line{font-size:1.4rem}}@media(max-width:480px){.typing-line{font-size:1.1rem}}</style>
 </head>
 
 <body>
@@ -183,6 +190,9 @@
 
   <hr>
 
+  <!-- 返回顶部按钮 -->
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">˄</button>
+
   <!-- 页脚 -->
   <footer>
     <div class="footer-content">
@@ -215,6 +225,12 @@
     const s=new Date(2021,0,12,0,0,0);function u(){const e=new Date,t=e-s,d=Math.floor(t/(1e3*60*60*24)),h=Math.floor(t%(1e3*60*60*24)/(1e3*60*60)),m=Math.floor(t%(1e3*60*60)/(1e3*60)),n=Math.floor(t%(1e3*60)/1e3);document.getElementById('runTime').textContent=`${d}天 ${h}时 ${m}分 ${n}秒`}u(),setInterval(u,1e3);
     // 打字效果
     const phrases=["一名编程学习者 ✧(◍˃̶ᗜ˂̶◍)✩","正在学习Python和Java (ง •̀_•́)ง","新手上路，请多指教 ヾ(≧▽≦*)o"];let pIndex=0,cIndex=0,isDeleting=!1;const typingSpan=document.querySelector('.typing-text');function type(){const current=phrases[pIndex];isDeleting?cIndex--:cIndex++;typingSpan.textContent=current.substring(0,cIndex);typingSpan.style.textShadow="0 0 8px rgba(51,51,51,0.5)";const progress=cIndex/current.length;let delay=isDeleting?Math.floor(50+progress*50):Math.floor(180-progress*120);if(!isDeleting&&cIndex===current.length){typingSpan.style.textShadow="none";delay=1000;isDeleting=!0}else if(isDeleting&&cIndex===0){isDeleting=!1;pIndex=(pIndex+1)%phrases.length;delay=500}setTimeout(type,delay)}type();
-  </script>
+  // 图片加载动画
+  document.querySelectorAll('img').forEach(img=>{img.complete?img.classList.add('loaded'):img.addEventListener('load',()=>img.classList.add('loaded'))});
+  // section 淡入动画
+  const observer=new IntersectionObserver(e=>e.forEach(t=>{t.isIntersecting&&t.target.classList.add('visible')}),{threshold:0.1});document.querySelectorAll('.section').forEach(s=>observer.observe(s));
+  // 返回顶部按钮显示/隐藏
+  const backToTop=document.querySelector('.back-to-top');window.addEventListener('scroll',()=>{backToTop.classList.toggle('show',window.scrollY>300)});
+</script>
 </body>
 </html>
