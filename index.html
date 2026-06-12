@@ -218,7 +218,7 @@
     console.log('%c如果你看到了这里，说明你是个好奇的开发者！💻', 'font-size:12px;color:#888;');
 
     // 平滑滚动脚本
-    document.querySelectorAll('a[href^="#"]').forEach(l=>{l.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));t&&window.scrollTo({top:t.offsetTop-80,behavior:'smooth'})})});
+    document.querySelectorAll('a[href^="#"]').forEach(l=>{l.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t){const headerHeight=document.querySelector('header').offsetHeight+20;t&&window.scrollTo({top:t.offsetTop-headerHeight,behavior:'smooth'})}})});
     // 顶部导航滚动动画
     const header=document.querySelector('header');window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>50)});
     // 网站运行时间计算脚本
