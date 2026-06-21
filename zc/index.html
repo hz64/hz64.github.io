@@ -1,129 +1,371 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>赞赏支持 - ZeAy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="如果您喜欢我的内容，可以通过赞赏码支持我，感谢您的支持！">
-    <meta name="keywords" content="ZeAy,赞赏支持,二维码,微信支付">
-    <meta name="author" content="ZeAy">
-    <meta name="robots" content="index, follow">
-    <link rel="icon" href="../assets/img/logo.png" type="image/png">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            text-align: center;
-            padding: 40px 10px;
-            min-height: 100vh;
-            animation: fadeInBg 1s;
-        }
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .qr-container {
-            display: inline-block;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            max-width: 100%;
-            animation: floatIn 1s cubic-bezier(.68,-0.55,.27,1.55);
-        }
-        @keyframes floatIn {
-            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        .qr-image {
-            width: 300px;
-            height: 300px;
-            max-width: 80vw;
-            max-height: 80vw;
-            object-fit: contain;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: qrPop 1.2s cubic-bezier(.68,-0.55,.27,1.55);
-        }
-        .qr-image:hover {
-            transform: scale(1.06) rotate(-2deg);
-            box-shadow: 0 8px 32px rgba(60,60,120,0.18);
-        }
-        /* 新增：按下动画类 */
-        .qr-image.qr-active {
-            transform: scale(1.13) rotate(3deg);
-            box-shadow: 0 12px 40px rgba(60,60,120,0.22);
-        }
-        @keyframes qrPop {
-            0% { transform: scale(0.7) rotate(8deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-        .caption {
-            margin-top: 12px;
-            color: #555;
-            word-break: break-all;
-            opacity: 0.85;
-            animation: fadeInText 1.5s;
-        }
-        @keyframes fadeInText {
-            from { opacity: 0; }
-            to { opacity: 0.85; }
-        }
-        @media (max-width: 400px) {
-            .qr-image {
-                width: 90vw;
-                height: 90vw;
-                max-width: 90vw;
-                max-height: 90vw;
-            }
-            body {
-                padding: 10px 2px;
-            }
-            .qr-container {
-                padding: 10px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赞赏支持 - 小泽</title>
+  <meta name="description" content="如果您喜欢我的内容，可以通过赞赏码支持我，感谢您的支持！">
+  <meta name="keywords" content="小泽,赞赏支持,二维码,微信支付">
+  <meta name="author" content="小泽">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 15px;
+      background: #fff;
+      color: #555;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    h1, h2, h3, strong { color: #333; }
+    h1 { font-size: 2rem; margin-bottom: .8rem; }
+    h2 { font-size: 1.7rem; margin-bottom: .7rem; }
+    p { color: #555; margin: 0 0 1rem 0; }
+    a { color: #0066cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* 顶部导航 */
+    header {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-left img {
+      width: 32px;
+      height: 32px;
+    }
+    .header-left strong {
+      font-size: 1rem;
+    }
+    .main-nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 8px 12px;
+      gap: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      flex-wrap: wrap;
+    }
+    .main-nav li { margin-bottom: 0; }
+    .main-nav a { color: #333; font-size: .95rem; }
+
+    /* 主容器 */
+    .container {
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* 页面主体 */
+    .support-section {
+      text-align: center;
+      padding: 40px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .support-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .qr-container {
+      display: inline-block;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      max-width: 100%;
+      box-sizing: border-box;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .qr-container:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .qr-image {
+      width: 300px;
+      height: 300px;
+      max-width: 80vw;
+      max-height: 80vw;
+      object-fit: contain;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: block;
+    }
+    .qr-image:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(60,60,120,0.15);
+    }
+    .qr-image.qr-active {
+      transform: scale(1.10) rotate(2deg);
+      box-shadow: 0 12px 40px rgba(60,60,120,0.22);
+    }
+
+    .caption {
+      margin-top: 16px;
+      color: #555;
+      font-size: 1.1rem;
+    }
+    .tip {
+      margin-top: 12px;
+      color: #0066cc;
+      font-size: 1em;
+      opacity: 0.85;
+    }
+
+    /* 返回按钮 */
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 24px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      color: #333;
+      font-size: .95rem;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .back-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      background: #fff;
+      text-decoration: none;
+    }
+
+    /* 页脚 */
+    footer {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 0;
+      border-top: 1px solid #eee;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-logo img {
+      width: 32px;
+      height: 32px;
+    }
+    footer p {
+      color: #666;
+      font-size: .9rem;
+      margin: 0;
+    }
+
+    /* 返回顶部按钮 */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: #fff;
+      color: #333;
+      border: 3px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease, transform .3s ease, box-shadow .3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      z-index: 99;
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* 图片懒加载动画 */
+    img {
+      opacity: 0;
+      transition: opacity .4s ease, transform .3s ease;
+    }
+    img.loaded {
+      opacity: 1;
+    }
+    img:not(.loaded) {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.4s infinite;
+    }
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* 响应式 */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .main-nav ul {
+        justify-content: center;
+        gap: 10px;
+      }
+      h1 { font-size: 1.7rem; }
+      .support-section { padding: 30px 0; }
+      .qr-container { padding: 20px; }
+    }
+    @media (max-width: 400px) {
+      .qr-image {
+        width: 90vw;
+        height: 90vw;
+        max-width: 90vw;
+        max-height: 90vw;
+      }
+      .qr-container { padding: 12px; }
+      body { padding: 0 8px; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
 </head>
 <body>
-    <h1>感谢您的支持</h1>
-    <div class="qr-container">
-            <img src="img/wxzsm.png" alt="ZeAy微信赞赏码 - 小泽" class="qr-image">
-            <div class="caption">ZeAy (小泽)</div>
-        <div class="tip" style="margin-top:10px;color:#2d8cf0;font-size:1em;opacity:0.85;animation:fadeInText 2s;">
-            截图或保存赞赏码微信扫一扫
-        </div>
+
+  <!-- 顶部导航 -->
+  <header>
+    <div class="header-left">
+      <img src="../assets/img/logo.png" alt="小泽网站Logo" width="32" height="32">
+      <strong>小泽</strong>
     </div>
-    <script>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="../">首页</a></li>
+        <li><a href="../#about">关于</a></li>
+        <li><a href="../#links">链接</a></li>
+        <li><a href="../#contact">联系我</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 主内容 -->
+  <div class="container">
+    <section class="support-section">
+      <h1>感谢您的支持 💖</h1>
+      <p>如果您喜欢我的内容，可以扫描下方二维码赞赏支持</p>
+      <div class="qr-container">
+        <img src="img/wxzsm.png" alt="小泽微信赞赏码" class="qr-image">
+        <div class="caption">小泽 (ZeAy)</div>
+        <div class="tip">截图或保存赞赏码，微信扫一扫</div>
+      </div>
+      <br>
+      <a href="../" class="back-link">← 返回主页</a>
+    </section>
+  </div>
+
+  <!-- 返回顶部按钮 -->
+  <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">˄</button>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="../assets/img/logo.png" alt="小泽网站Logo" width="32" height="32">
+        <strong>小泽</strong>
+      </div>
+      <p>💖 Copyright © 2026 小泽. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var qrImg = document.querySelector('.qr-image');
-        if (!qrImg) return;
-        // 手机端按下
+      // 图片加载动画
+      document.querySelectorAll('img').forEach(function(img) {
+        if (img.complete) {
+          img.classList.add('loaded');
+        } else {
+          img.addEventListener('load', function() {
+            img.classList.add('loaded');
+          });
+        }
+      });
+
+      // 二维码按下/松开动画
+      var qrImg = document.querySelector('.qr-image');
+      if (qrImg) {
         qrImg.addEventListener('touchstart', function() {
-            qrImg.classList.add('qr-active');
+          qrImg.classList.add('qr-active');
         });
-        // 手机端松开
         qrImg.addEventListener('touchend', function() {
-            qrImg.classList.remove('qr-active');
+          qrImg.classList.remove('qr-active');
         });
-        // 防止滑动时卡住
         qrImg.addEventListener('touchcancel', function() {
-            qrImg.classList.remove('qr-active');
+          qrImg.classList.remove('qr-active');
         });
-        // 兼容PC端鼠标按下
         qrImg.addEventListener('mousedown', function() {
-            qrImg.classList.add('qr-active');
+          qrImg.classList.add('qr-active');
         });
         qrImg.addEventListener('mouseup', function() {
-            qrImg.classList.remove('qr-active');
+          qrImg.classList.remove('qr-active');
         });
         qrImg.addEventListener('mouseleave', function() {
-            qrImg.classList.remove('qr-active');
+          qrImg.classList.remove('qr-active');
         });
+      }
+
+      // section 淡入动画
+      var section = document.querySelector('.support-section');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+      if (section) observer.observe(section);
+
+      // 返回顶部按钮
+      var backToTop = document.querySelector('.back-to-top');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          backToTop.classList.add('show');
+        } else {
+          backToTop.classList.remove('show');
+        }
+      });
     });
-    </script>
+  </script>
 </body>
 </html>
