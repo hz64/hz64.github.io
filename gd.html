@@ -11,16 +11,16 @@
   <link rel="icon" href="./assets/img/logo.png" type="image/png">
   <style>
   :root{
-    --bg:#f5f7fa;
+    --bg:#f0f2f5;
     --card:#ffffff;
     --primary:#5e72e4;
+    --primary-light:#7b8ce6;
     --text:#3c4858;
     --text-light:#8492a6;
     --radius:16px;
-    --shadow:0 8px 20px -6px rgba(94,114,228,.25);
-    --shadow-hover:0 16px 40px -8px rgba(94,114,228,.35);
+    --shadow:0 4px 16px rgba(0,0,0,.06);
+    --shadow-hover:0 12px 32px rgba(94,114,228,.2);
     --trans:.3s cubic-bezier(.4,0,.2,1);
-    --trans-fast:.2s cubic-bezier(.4,0,.2,1);
   }
   *{box-sizing:border-box;}
   body{
@@ -29,204 +29,312 @@
     background:var(--bg);
     color:var(--text);
     -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
   }
+
+  /* 顶部装饰 */
+  .header-decor{
+    height:4px;
+    background:linear-gradient(90deg, #5e72e4, #6c7dd4, #7b8ce6, #6c7dd4, #5e72e4);
+    background-size:200% 100%;
+    animation:shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer{
+    0%,100%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+  }
+
   h2{
     text-align:center;
-    font-size:clamp(1.5rem, 5vw, 2.2rem);
+    font-size:clamp(1.4rem, 5vw, 2rem);
     font-weight:700;
-    margin:40px 0 8px;
+    margin:36px 16px 6px;
     letter-spacing:.5px;
     background:linear-gradient(135deg, var(--primary), #6c7dd4);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
-    animation:fadeInDown .5s ease-out;
   }
   .sub{
     text-align:center;
-    font-size:clamp(.85rem, 3vw, .95rem);
+    font-size:clamp(.82rem, 3vw, .92rem);
     color:var(--text-light);
-    margin-bottom:32px;
-    animation:fadeInDown .5s ease-out .1s both;
+    margin:0 16px 32px;
   }
+
   .container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
     gap:20px;
-    max-width:1100px;
+    max-width:1200px;
     margin:0 auto 48px;
-    padding:0 12px;
+    padding:0 16px;
+    flex:1;
   }
+
   .section{
     background:var(--card);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    padding:20px;
+    padding:20px 20px 16px;
     transition:transform var(--trans),box-shadow var(--trans);
-    animation:fadeInUp .5s ease-out backwards;
-    border:1px solid rgba(94,114,228,.08);
+    border:1px solid rgba(0,0,0,.04);
+    display:flex;
+    flex-direction:column;
   }
-  .section:nth-child(1){animation-delay:.1s;}
-  .section:nth-child(2){animation-delay:.15s;}
-  .section:nth-child(3){animation-delay:.2s;}
-  .section:nth-child(4){animation-delay:.25s;}
-  .section:nth-child(5){animation-delay:.3s;}
-  .section:nth-child(6){animation-delay:.35s;}
   .section:hover{
-    transform:translateY(-6px) scale(1.02);
+    transform:translateY(-4px);
     box-shadow:var(--shadow-hover);
   }
+
+  /* 分类图标 */
+  .section-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.3rem;
+    margin-bottom:12px;
+    flex-shrink:0;
+  }
+  .icon-pentest{background:linear-gradient(135deg,#f5365c,#f56036);}
+  .icon-galgame{background:linear-gradient(135deg,#f093fb,#f5576c);}
+  .icon-service{background:linear-gradient(135deg,#4facfe,#00f2fe);}
+  .icon-game{background:linear-gradient(135deg,#43e97b,#38f9d7);}
+  .icon-tool{background:linear-gradient(135deg,#fa709a,#fee140);}
+  .icon-app{background:linear-gradient(135deg,#a18cd1,#fbc2eb);}
+  .icon-anime{background:linear-gradient(135deg,#fccb90,#d57eeb);}
+
   .section h3{
-    font-size:clamp(1rem, 4vw, 1.15rem);
-    margin:0 0 14px;
+    font-size:1.05rem;
+    margin:0 0 12px;
     display:flex;
     align-items:center;
     gap:8px;
-    color:var(--primary);
+    color:var(--text);
     font-weight:600;
     padding-bottom:10px;
-    border-bottom:1px solid rgba(94,114,228,.1);
+    border-bottom:1px solid rgba(0,0,0,.06);
+    flex-shrink:0;
   }
+
+  .section .links{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    flex:1;
+  }
+
   .section a{
     display:flex;
     align-items:center;
     gap:8px;
     padding:8px 10px;
-    font-size:clamp(.85rem, 3vw, .95rem);
+    font-size:.9rem;
     color:var(--text);
     text-decoration:none;
     border-radius:8px;
-    transition:all var(--trans-fast);
-    margin:-4px 0;
+    transition:all .2s ease;
+    position:relative;
+    overflow:hidden;
   }
   .section a:hover{
-    background:linear-gradient(135deg, rgba(94,114,228,.08), rgba(94,114,228,.12));
+    background:rgba(94,114,228,.06);
     color:var(--primary);
-    transform:translateX(4px);
     padding-left:14px;
   }
   .section a::before{
-    content:"→";
-    opacity:0;
-    transform:translateX(-6px);
-    transition:all var(--trans-fast);
-    font-size:.8rem;
-    color:var(--primary);
+    content:"";
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:0;
+    height:60%;
+    background:var(--primary);
+    border-radius:0 3px 3px 0;
+    transition:width .2s ease;
   }
   .section a:hover::before{
-    opacity:1;
-    transform:translateX(0);
+    width:3px;
   }
+
+  /* 链接计数标签 */
+  .section .count{
+    font-size:.75rem;
+    color:var(--text-light);
+    margin-left:auto;
+    background:rgba(0,0,0,.04);
+    padding:2px 8px;
+    border-radius:10px;
+    flex-shrink:0;
+  }
+
   footer{
     text-align:center;
-    font-size:.8rem;
+    font-size:.78rem;
     color:var(--text-light);
     padding:20px 10px;
-    animation:fadeIn .5s ease-out .4s both;
+    border-top:1px solid rgba(0,0,0,.04);
+    flex-shrink:0;
   }
-  @keyframes fadeInDown{
-    from{
-      opacity:0;
-      transform:translateY(-20px);
-    }
-    to{
-      opacity:1;
-      transform:translateY(0);
-    }
-  }
-  @keyframes fadeInUp{
-    from{
-      opacity:0;
-      transform:translateY(20px);
-    }
-    to{
-      opacity:1;
-      transform:translateY(0);
-    }
-  }
-  @keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-  }
-  @media(max-width:480px){
+
+  /* ========== 响应式 ========== */
+
+  /* 平板 */
+  @media(max-width:768px){
     .container{
-      gap:16px;
+      grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+      gap:14px;
+      padding:0 12px;
+    }
+    .section{
+      padding:16px 16px 12px;
+    }
+    h2{margin-top:28px;}
+    .sub{margin-bottom:24px;}
+  }
+
+  /* 手机 */
+  @media(max-width:500px){
+    .container{
+      grid-template-columns:1fr;
+      gap:12px;
       padding:0 10px;
     }
     .section{
-      padding:16px;
+      padding:14px 14px 10px;
+      border-radius:12px;
+    }
+    .section h3{
+      font-size:1rem;
+      margin-bottom:8px;
+    }
+    .section a{
+      font-size:.85rem;
+      padding:7px 8px;
+    }
+    .section a:hover{
+      padding-left:12px;
     }
     h2{
-      margin:30px 0 6px;
+      margin:24px 12px 4px;
+      font-size:1.3rem;
     }
     .sub{
-      margin-bottom:24px;
+      margin:0 12px 20px;
+      font-size:.8rem;
+    }
+    .section-icon{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      font-size:1.1rem;
+      margin-bottom:8px;
+    }
+  }
+
+  /* 大屏优化 */
+  @media(min-width:1400px){
+    .container{
+      max-width:1400px;
+      grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+      gap:24px;
     }
   }
   </style>
 </head>
 <body>
 
+  <div class="header-decor"></div>
+
   <h2>更多</h2>
   <p class="sub">ZeAy 收集的那些有用/有趣的小玩意</p>
 
-    <div class="container">
-    <div class="section">
-      <h3>🔐 在线渗透工具</h3>
-      <a href="./c/led_pentest_tool.html">睿芯LED BLE渗透测试工具</a>
-    </div>
-
   <div class="container">
+
     <div class="section">
-      <h3>🌸 在线 Galgame</h3>
-      <a href="./xfjld/">[R18+] 幸福家里蹲的养成方法 (Ver2.0.7)</a>
+      <div class="section-icon icon-pentest">🔐</div>
+      <h3>在线渗透工具</h3>
+      <div class="links">
+        <a href="./c/led_pentest_tool.html">睿芯LED BLE渗透测试工具</a>
+      </div>
     </div>
 
     <div class="section">
-      <h3>🌐 在线服务</h3>
-      <a href="./c/sy/">小泽添加水印平台</a>
-      <a href="https://hx.hz6.xx.kg/">数据库查询系统</a>
-      <a href="./a/tspt">学校教育局投诉平台</a>
-      <a href="https://gitlab.com/hz64/qcn">小米 QCN 基带下载</a>
+      <div class="section-icon icon-galgame">🌸</div>
+      <h3>在线 Galgame</h3>
+      <div class="links">
+        <a href="./xfjld/">[R18+] 幸福家里蹲的养成方法 (Ver2.0.7)</a>
+      </div>
     </div>
 
     <div class="section">
-      <h3>🎮 小游戏</h3>
-      <a href="./a/yx/sl/">扫雷小游戏</a>
-      <a href="./a/yx/sc/">3D 赛车</a>
-      <a href="https://play.mc.js.cool/1.8">我的世界 1.8.8 Java 版</a>
-      <a href="./b/catch-the-cat-master">圈小猫 Canvas 游戏</a>
-      <a href="./a/tz/">奔跑吧浩泽</a>
-      <a href="./b/ngd-b.github.io-master">超级玛丽</a>
-      <a href="./b/FruitNinja">切水果</a>
-      <a href="./b/html5-fly">打飞机</a>
-      <a href="./b/bydr">捕鱼达人</a>
+      <div class="section-icon icon-service">🌐</div>
+      <h3>在线服务</h3>
+      <div class="links">
+        <a href="./c/jm.html">在线 jm 漫画预览</a>
+        <a href="./c/sy/">小泽添加水印平台</a>
+        <a href="https://hx.hz6.xx.kg/">数据库查询系统</a>
+        <a href="./a/tspt">学校教育局投诉平台</a>
+        <a href="https://gitlab.com/hz64/qcn">小米 QCN 基带下载</a>
+      </div>
     </div>
 
     <div class="section">
-      <h3>🧰 工具箱</h3>
-      <a href="./c/thirtydollarwebsite">🗿</a>
-      <a href="./zimg.html">ZeAy 图片加密算法</a>
-      <a href="./a/ms/">网易云音乐</a>
-      <a href="./a/mm/">密码生成工具</a>
-      <a href="./a/3DCS.html">3D 测试</a>
-      <a href="./b/fish/fish.html">鱼缸测试</a>
-      <a href="./a/html-vc">HTML 编辑器</a>
-      <a href="./b/m3u8-downloader">M3U8 下载器</a>
-      <a href="./b/KaliToolsManual">Kali 工具说明书</a>
-      <a href="./a/mcpf">我的世界皮肤包</a>
-      <a href="./a/ll">流量消耗器</a>
+      <div class="section-icon icon-game">🎮</div>
+      <h3>小游戏</h3>
+      <div class="links">
+        <a href="./a/yx/sl/">扫雷小游戏</a>
+        <a href="./a/yx/sc/">3D 赛车</a>
+        <a href="https://play.mc.js.cool/1.8">我的世界 1.8.8 Java 版</a>
+        <a href="./b/catch-the-cat-master">圈小猫 Canvas 游戏</a>
+        <a href="./a/tz/">奔跑吧浩泽</a>
+        <a href="./b/ngd-b.github.io-master">超级玛丽</a>
+        <a href="./b/FruitNinja">切水果</a>
+        <a href="./b/html5-fly">打飞机</a>
+        <a href="./b/bydr">捕鱼达人</a>
+      </div>
     </div>
 
     <div class="section">
-      <h3>📲 APP 应用</h3>
-      <a href="#">ZePW</a>
+      <div class="section-icon icon-tool">🧰</div>
+      <h3>工具箱</h3>
+      <div class="links">
+        <a href="./c/thirtydollarwebsite">🗿</a>
+        <a href="./zimg.html">ZeAy 图片加密算法</a>
+        <a href="./a/ms/">网易云音乐</a>
+        <a href="./a/mm/">密码生成工具</a>
+        <a href="./a/3DCS.html">3D 测试</a>
+        <a href="./b/fish/fish.html">鱼缸测试</a>
+        <a href="./a/html-vc">HTML 编辑器</a>
+        <a href="./b/m3u8-downloader">M3U8 下载器</a>
+        <a href="./b/KaliToolsManual">Kali 工具说明书</a>
+        <a href="./a/mcpf">我的世界皮肤包</a>
+        <a href="./a/ll">流量消耗器</a>
+      </div>
     </div>
 
     <div class="section">
-      <h3>🎞️ H5 动画</h3>
-      <a href="./a/dh/sk/">樱花飘落动画</a>
+      <div class="section-icon icon-app">📲</div>
+      <h3>APP 应用</h3>
+      <div class="links">
+        <a href="#">ZePW</a>
+      </div>
     </div>
+
+    <div class="section">
+      <div class="section-icon icon-anime">🎞️</div>
+      <h3>H5 动画</h3>
+      <div class="links">
+        <a href="./a/dh/sk/">樱花飘落动画</a>
+      </div>
+    </div>
+
   </div>
 
   <footer>ZeAy © 2025</footer>
